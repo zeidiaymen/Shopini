@@ -2,9 +2,11 @@ package com.example.demo.entity;
 
 
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
 @SuppressWarnings("serial")
 @DiscriminatorValue("LIVREUR")
+@Entity
 public class Livreur extends User  {
 	
 	private int solde;

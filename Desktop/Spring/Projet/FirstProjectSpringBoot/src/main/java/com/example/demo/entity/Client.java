@@ -1,10 +1,11 @@
 package com.example.demo.entity;
 
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
 @SuppressWarnings("serial")
 @DiscriminatorValue("CLIENT")
-
+@Entity
 public class Client extends User {
 
 	private Profession profession;
