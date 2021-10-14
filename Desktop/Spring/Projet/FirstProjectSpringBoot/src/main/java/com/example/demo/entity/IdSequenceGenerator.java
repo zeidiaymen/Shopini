@@ -27,7 +27,7 @@ public class IdSequenceGenerator extends SequenceStyleGenerator {
 
 		if (object instanceof User) {
 			User user = (User) object;
-			final String  roleSubString =user.getRole().name().substring(0, 3);
+			final String  roleSubString =user.getRole().substring(0, 3);
 			final String createdAtSubString=user.getCreatedAt().substring(8, 10);
 			final String sexeSubString=user.getSexe().substring(0, 1);
 					valuePrefix = roleSubString

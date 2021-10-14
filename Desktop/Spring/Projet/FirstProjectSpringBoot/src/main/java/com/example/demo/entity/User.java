@@ -7,6 +7,11 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "user")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="role")
+@DiscriminatorValue("USER")
+
+
 public class User {
 
 	@Id
@@ -40,8 +45,8 @@ public class User {
 	@Column
 	private String createdAt;
 
-	@Enumerated(EnumType.STRING)
-	private Role role;
+    @Column(name = "role", insertable = false, updatable = false)
+	private String role;
 
 	public String getId() {
 		return id;
@@ -107,11 +112,12 @@ public class User {
 		this.createdAt = createdAt;
 	}
 
-	public Role getRole() {
-		return role;
+	public String getRole() {
+	    return this.getClass().getAnnotation(DiscriminatorValue.class).value();
+
 	}
 
-	public void setRole(Role role) {
+	public void setRole(String role) {
 		this.role = role;
 	}	
 
@@ -135,7 +141,7 @@ public class User {
 	}
 
 	public User(String firstName, String lastName, String email, String password,String sexe, String tel, String picture,
-			String createdAt, Role role) {
+			String createdAt, String role) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
