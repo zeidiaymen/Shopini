@@ -1,9 +1,10 @@
 package com.example.demo.entity;
 
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
 @DiscriminatorValue("FOURNISSEUR")
-
+@Entity
 public class Fournisseur extends User {
 
 	public Fournisseur() {

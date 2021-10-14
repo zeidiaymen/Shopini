@@ -1,15 +1,18 @@
 package com.example.demo.entity;
 
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 @DiscriminatorValue("LIVREUR")
-
+@Entity
 public class Livreur extends User {
 	
 	private int solde;
 	private int pourcentage;
 
-	
+	@OneToOne(mappedBy="livreur")
+	Delivery del ;
 
 	public Livreur() {
 	}

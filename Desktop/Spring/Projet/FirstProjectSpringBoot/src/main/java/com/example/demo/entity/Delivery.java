@@ -18,7 +18,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
+/**
+*
+* @author ZEIDI AYMEN
+*/
 
 
 @Entity
@@ -53,6 +56,7 @@ public void setStatus(String status) {
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="id_livreur")
 	private Livreur livreur ;
+	
 	public Livreur getLivreur() {
 		return livreur;
 	}
