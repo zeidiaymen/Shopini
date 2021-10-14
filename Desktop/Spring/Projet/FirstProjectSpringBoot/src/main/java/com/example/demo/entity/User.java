@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 import org.hibernate.annotations.Parameter;
@@ -13,7 +15,7 @@ import org.hibernate.annotations.GenericGenerator;
 @DiscriminatorValue("USER")
 
 
-public class User {
+public class User implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_generator")

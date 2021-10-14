@@ -1,11 +1,13 @@
 package com.example.demo.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @DiscriminatorValue("CLIENT")
 @Entity
-public class Client extends User {
+public class Client extends User implements Serializable {
 
 	private Profession profession;
 	private CategorieClient categorieClient;

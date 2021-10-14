@@ -1,12 +1,16 @@
 package com.example.demo.entity;
-
+import java.io.Serializable;
+/**
+*
+* @author ZEIDI AYMEN
+*/
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
 
 @Entity
-public class Facture {
+public class Facture implements Serializable {
 	
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)

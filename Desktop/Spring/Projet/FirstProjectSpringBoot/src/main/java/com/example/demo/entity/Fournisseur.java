@@ -1,11 +1,13 @@
 package com.example.demo.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @DiscriminatorValue("FOURNISSEUR")
 @Entity
-public class Fournisseur extends User {
+public class Fournisseur extends User implements Serializable {
 
 	public Fournisseur() {
 		// TODO Auto-generated constructor stub

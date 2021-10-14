@@ -1,12 +1,14 @@
 package com.example.demo.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 @DiscriminatorValue("LIVREUR")
 @Entity
-public class Livreur extends User {
+public class Livreur extends User implements Serializable{
 	
 	private int solde;
 	private int pourcentage;
