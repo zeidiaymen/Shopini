@@ -1,5 +1,9 @@
 package com.example.demo.entity;
 
+import javax.persistence.DiscriminatorValue;
+
+@DiscriminatorValue("CLIENT")
+
 public class Client extends User {
 
 	private Profession profession;

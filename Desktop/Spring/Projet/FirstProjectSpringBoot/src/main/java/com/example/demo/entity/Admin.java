@@ -1,5 +1,9 @@
 package com.example.demo.entity;
 
+import javax.persistence.DiscriminatorValue;
+
+@DiscriminatorValue("ADMIN")
+
 public class Admin extends User {
 
 	public Admin() {
