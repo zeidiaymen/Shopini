@@ -30,9 +30,9 @@ public class UserService {
 		Date date=new Date();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 		user.setCreatedAt(formatter.format(date));
-		//Adress
-		String ipAdress=Location.MyIpAdress();
-        Address address=Location.CurrentLocation(ipAdress);
+		//Address
+		String ipAdress=LocationService.MyIpAdress();
+        Address address=LocationService.CurrentLocation(ipAdress);
         user.setAddress(address.getCity());
 		
 		return userRepository.save(user);		
