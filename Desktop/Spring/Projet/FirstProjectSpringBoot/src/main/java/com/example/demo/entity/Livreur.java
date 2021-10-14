@@ -15,8 +15,8 @@ public class Livreur extends User {
 	}
 
 	public Livreur(String firstName, String lastName, String email, String password,String sexe, String tel, String picture,
-			String createdAt, String role,int solde,int pourcentage) {
-		super(firstName, lastName, email, password,sexe, tel, picture, createdAt, role);
+			String createdAt,String address, String role,int solde,int pourcentage) {
+		super(firstName, lastName, email, password,sexe, tel, picture,address, createdAt, role);
 		this.solde=solde;
 		this.pourcentage=pourcentage;
 		

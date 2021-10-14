@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import javax.persistence.*;
+
 import org.hibernate.annotations.Parameter;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -44,6 +45,8 @@ public class User {
 	private String picture;
 	@Column
 	private String createdAt;
+	@Column
+	private String address;
 
     @Column(name = "role", insertable = false, updatable = false)
 	private String role;
@@ -114,12 +117,9 @@ public class User {
 
 	public String getRole() {
 	    return this.getClass().getAnnotation(DiscriminatorValue.class).value();
-
 	}
 
-	public void setRole(String role) {
-		this.role = role;
-	}	
+
 
 	public String getSexe() {
 		return sexe;
@@ -128,12 +128,24 @@ public class User {
 	public void setSexe(String sexe) {
 		this.sexe = sexe;
 	}
+	
+	
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
 				+ ", password=" + password + ", sexe=" + sexe + ", Tel=" + Tel + ", picture=" + picture + ", createdAt="
-				+ createdAt + ", role=" + role + "]";
+				+ createdAt + ", address=" + address + ", role=" + role + "]";
 	}
 
 	public User() {
@@ -141,7 +153,7 @@ public class User {
 	}
 
 	public User(String firstName, String lastName, String email, String password,String sexe, String tel, String picture,
-			String createdAt, String role) {
+			String createdAt,String address, String role) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -150,7 +162,9 @@ public class User {
 		Tel = tel;
 		this.picture = picture;
 		this.createdAt = createdAt;
+		this.address=address;
 		this.role = role;
+		
 	}
 
 }

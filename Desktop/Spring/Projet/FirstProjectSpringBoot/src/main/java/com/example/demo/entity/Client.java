@@ -10,8 +10,8 @@ public class Client extends User {
 	private CategorieClient categorieClient;
 
 	public Client(String firstName, String lastName, String email, String password,String sexe, String tel, String picture,
-			String createdAt, String role, Profession profession, CategorieClient categorieClient) {
-		super(firstName, lastName, email, password,sexe, tel, picture, createdAt, role);
+			String createdAt,String address, String role, Profession profession, CategorieClient categorieClient) {
+		super(firstName, lastName, email, password,sexe, tel, picture, createdAt,address, role);
 		this.profession = profession;
 		this.categorieClient = categorieClient;
 	}

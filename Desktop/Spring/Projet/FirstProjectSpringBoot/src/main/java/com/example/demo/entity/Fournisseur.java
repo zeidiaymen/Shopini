@@ -11,8 +11,8 @@ public class Fournisseur extends User {
 	}
 
 	public Fournisseur(String firstName, String lastName, String email, String password,String sexe, String tel, String picture,
-			String createdAt, String role) {
-		super(firstName, lastName, email, password,sexe, tel, picture, createdAt, role);
+			String createdAt,String address, String role) {
+		super(firstName, lastName, email, password,sexe, tel, picture, createdAt,address, role);
 	}
 
 }
