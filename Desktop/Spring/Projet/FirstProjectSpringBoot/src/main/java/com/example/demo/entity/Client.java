@@ -1,20 +1,19 @@
 package com.example.demo.entity;
 
-import java.io.Serializable;
-
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
 
+@SuppressWarnings("serial")
 @DiscriminatorValue("CLIENT")
-@Entity
-public class Client extends User implements Serializable {
+
+public class Client extends User {
 
 	private Profession profession;
 	private CategorieClient categorieClient;
 
-	public Client(String firstName, String lastName, String email, String password,String sexe, String tel, String picture,
-			String createdAt,String address, String role, Profession profession, CategorieClient categorieClient) {
-		super(firstName, lastName, email, password,sexe, tel, picture, createdAt,address, role);
+	public Client(String firstName, String lastName, String email, String password, String sexe, String tel,
+			String picture, String createdAt, String address, String accountStatus, String activationToken,
+			String twoFactorAuthentication, Profession profession, CategorieClient categorieClient) {
+		super(firstName, lastName, email, password,sexe, tel, picture, createdAt,address,accountStatus,activationToken,twoFactorAuthentication);
 		this.profession = profession;
 		this.categorieClient = categorieClient;
 	}

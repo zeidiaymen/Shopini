@@ -5,9 +5,10 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import org.hibernate.annotations.Parameter;
-
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "user")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
@@ -15,7 +16,9 @@ import org.hibernate.annotations.GenericGenerator;
 @DiscriminatorValue("USER")
 
 
-public class User implements Serializable {
+public class User implements Serializable{
+
+	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_generator")
@@ -49,6 +52,13 @@ public class User implements Serializable {
 	private String createdAt;
 	@Column
 	private String address;
+	@Column
+	
+	private String accountStatus;
+	@Column
+	private String activationToken;
+	@Column
+	private String twoFactorAuthentication;
 
     @Column(name = "role", insertable = false, updatable = false)
 	private String role;
@@ -139,9 +149,35 @@ public class User implements Serializable {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}	
+	
+	public String getAccountStatus() {
+		return accountStatus;
 	}
 
-	
+	public void setAccountStatus(String accountStatus) {
+		this.accountStatus = accountStatus;
+	}
+
+	public String getActivationToken() {
+		return activationToken;
+	}
+
+	public void setActivationToken(String activationToken) {
+		this.activationToken = activationToken;
+	}
+
+	public String getTwoFactorAuthentication() {
+		return twoFactorAuthentication;
+	}
+
+	public void setTwoFactorAuthentication(String twoFactorAuthentication) {
+		this.twoFactorAuthentication = twoFactorAuthentication;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 
 	@Override
 	public String toString() {
@@ -154,19 +190,24 @@ public class User implements Serializable {
 
 	}
 
-	public User(String firstName, String lastName, String email, String password,String sexe, String tel, String picture,
-			String createdAt,String address, String role) {
+	public User(String firstName, String lastName, String email, String password, String sexe, String tel,
+			String picture, String createdAt, String address, String accountStatus, String activationToken,
+			String twoFactorAuthentication) {
+		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
-		this.sexe=sexe;
+		this.sexe = sexe;
 		Tel = tel;
 		this.picture = picture;
 		this.createdAt = createdAt;
-		this.address=address;
-		this.role = role;
-		
+		this.address = address;
+		this.accountStatus = accountStatus;
+		this.activationToken = activationToken;
+		this.twoFactorAuthentication = twoFactorAuthentication;
 	}
+
+	
 
 }
