@@ -25,20 +25,34 @@ public class Produit implements Serializable {
 	private String libelle;
 	private String picture;
 	private float prixUnitaire;
-	
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="prod")
+	private ProductInOrder prod ;
+	public ProductInOrder getProd() {
+		return prod;
+	}
+
+	public void setProd(ProductInOrder prod) {
+		this.prod = prod;
+	}
+
 	@OneToOne
 	@JoinColumn(name="FK_DetailProduit")
 	private DetailProduit detailProduit;
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="id_detailFacture")
-	private detailFacture detail;
 	
-	public Produit(Long idProduit, String code, String libelle, float prixUnitaire) {
+	
+	
+
+	public Produit(Long idProduit, String code, String libelle, String picture, float prixUnitaire, ProductInOrder prod,
+			DetailProduit detailProduit) {
 		super();
 		this.idProduit = idProduit;
 		this.code = code;
 		this.libelle = libelle;
+		this.picture = picture;
 		this.prixUnitaire = prixUnitaire;
+		this.prod = prod;
+		this.detailProduit = detailProduit;
 	}
 
 	public Long getIdProduit() {
