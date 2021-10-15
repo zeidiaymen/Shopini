@@ -64,6 +64,14 @@ public void setStatus(String status) {
 	public void setLivreur(Livreur livreur) {
 		this.livreur = livreur;
 	}
+	public Client getClientDel() {
+		return clientDel;
+	}
+
+	public void setClientDel(Client clientDel) {
+		this.clientDel = clientDel;
+	}
+
 	@Enumerated(EnumType.STRING)
 	public DeliveryWeightCategory getWeight() {
 		return Weight;
@@ -88,8 +96,9 @@ public void setStatus(String status) {
 
 
 
+
 	public Delivery(int iD, String name, String cellPhone, String address, String status, DeliveryWeightCategory weight,
-			Date estimatedTime, Client client, Livreur livreur) {
+			Date estimatedTime, Client clientDel, Livreur livreur) {
 		super();
 		ID = iD;
 		Name = name;
@@ -98,7 +107,7 @@ public void setStatus(String status) {
 		this.status = status;
 		Weight = weight;
 		EstimatedTime = estimatedTime;
-		this.clientDel = client;
+		this.clientDel = clientDel;
 		this.livreur = livreur;
 	}
 

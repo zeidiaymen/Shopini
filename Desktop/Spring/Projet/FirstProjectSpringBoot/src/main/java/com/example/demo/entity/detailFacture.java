@@ -22,14 +22,14 @@ public class detailFacture implements Serializable{
 	  @JoinColumn(name="Fk_facture")
 	  private Facture facture;
 	@OneToMany(mappedBy="detail")
-	private List<Produit> prods ;
+	private List<ProductInOrder> prods ;
 
 	public Long getIdDetailFacture() {
 		return idDetailFacture;
 	}
 
 	public detailFacture(Long idDetailFacture, int qte, Float prixTotal, int pourcentageRemise, Float montanRemise,
-			Facture facture, List<Produit> prods) {
+			Facture facture, List<ProductInOrder> prods) {
 		super();
 		this.idDetailFacture = idDetailFacture;
 		this.qte = qte;
@@ -57,11 +57,11 @@ public class detailFacture implements Serializable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public List<Produit> getProds() {
+	public List<ProductInOrder> getProds() {
 		return prods;
 	}
 
-	public void setProds(List<Produit> prods) {
+	public void setProds(List<ProductInOrder> prods) {
 		this.prods = prods;
 	}
 
