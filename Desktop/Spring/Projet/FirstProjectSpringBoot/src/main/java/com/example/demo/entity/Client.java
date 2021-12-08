@@ -2,13 +2,16 @@ package com.example.demo.entity;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @SuppressWarnings("serial")
 @DiscriminatorValue("CLIENT")
 @Entity
 public class Client extends User {
-
+	@Enumerated(EnumType.STRING)
 	private Profession profession;
+	@Enumerated(EnumType.STRING)
 	private CategorieClient categorieClient;
 	
 	public Client()
@@ -16,13 +19,7 @@ public class Client extends User {
 		
 	}
 
-	public Client(String firstName, String lastName, String email, String password, String sexe, String tel,
-			String picture, String createdAt, String address, String accountStatus, String activationToken,
-			String twoFactorAuthentication, Profession profession, CategorieClient categorieClient) {
-		super(firstName, lastName, email, password,sexe, tel, picture, createdAt,address,accountStatus,activationToken,twoFactorAuthentication);
-		this.profession = profession;
-		this.categorieClient = categorieClient;
-	}
+	
 	
 
 	public Profession getProfession() {
