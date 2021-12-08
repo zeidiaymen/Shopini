@@ -2,16 +2,17 @@ package com.example.demo.utils;
 
 import java.text.ParseException;
 
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 @Service
 public class Utils {
 	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 	public Utils() {
 		// TODO Auto-generated constructor stub
 	}
@@ -39,86 +40,116 @@ public class Utils {
 
 	}
 
-	public static String getCurrentDate() { 
+	public static String getCurrentDate() {
 
 		Date date = new Date();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 		return formatter.format(date);
 	}
 
-	public static boolean compareDateByMonths(String date,int value) { //retourne false quand la difference entre la date d'aujourd'hui et la date introduite moins que la valeur 
+	public static boolean compareDateByMonths(String date, int value) { // retourne
+																		// false
+																		// quand
+																		// la
+																		// difference
+																		// entre
+																		// la
+																		// date
+																		// d'aujourd'hui
+																		// et la
+																		// date
+																		// introduite
+																		// moins
+																		// que
+																		// la
+																		// valeur
 		String currentDate = getCurrentDate();
-		Date datetoDate=null;
-		Date currentDateToDate=null;
+		Date datetoDate = null;
+		Date currentDateToDate = null;
 
-	    try {
-	    	datetoDate=new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(date);
-	    	currentDateToDate=new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(currentDate);
-
+		try {
+			datetoDate = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(date);
+			currentDateToDate = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(currentDate);
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}  
+		}
 
-		System.out.println("1 " + datetoDate.getMonth()+datetoDate.getYear()*12);
-		int getMonthsFromDate=datetoDate.getMonth()+datetoDate.getYear()*12;
-		int getMonthsFromCurrentDate=currentDateToDate.getMonth()+datetoDate.getYear()*12;
-		
-		if((getMonthsFromCurrentDate-getMonthsFromDate)<value)
+		System.out.println("1 " + datetoDate.getMonth() + datetoDate.getYear() * 12);
+		int getMonthsFromDate = datetoDate.getMonth() + datetoDate.getYear() * 12;
+		int getMonthsFromCurrentDate = currentDateToDate.getMonth() + datetoDate.getYear() * 12;
+
+		if ((getMonthsFromCurrentDate - getMonthsFromDate) < value)
 			return false;
-		
-		return true;	
+
+		return true;
 
 	}
-	
-	
-	public static boolean compareDateByMinutes(String date,int value) { //Retourne true si la difference entre la date introduite et la date actuelle moins qu'une heure
+
+	public static boolean compareDateByMinutes(String date, int value) { // Retourne
+																			// true
+																			// si
+																			// la
+																			// difference
+																			// entre
+																			// la
+																			// date
+																			// introduite
+																			// et
+																			// la
+																			// date
+																			// actuelle
+																			// moins
+																			// que
+																			// (valeu)
 		String currentDate = getCurrentDate();
-		Date dateToDate=null;
-		Date currentDateToDate=null;
+		Date dateToDate = null;
+		Date currentDateToDate = null;
 
-	    try {
-	    	dateToDate=new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(date);
-	    	currentDateToDate=new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(currentDate);
-
+		try {
+			dateToDate = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(date);
+			currentDateToDate = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(currentDate);
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}  
+		}
 
 		@SuppressWarnings("deprecation")
-		int getMonthsFromDate=dateToDate.getMonth()+dateToDate.getYear()*12;
+		int getMonthsFromDate = dateToDate.getMonth() + dateToDate.getYear() * 12;
 		@SuppressWarnings("deprecation")
-		int getMonthsFromCurrentDate=currentDateToDate.getMonth()+currentDateToDate.getYear()*12;
+		int getMonthsFromCurrentDate = currentDateToDate.getMonth() + currentDateToDate.getYear() * 12;
 		@SuppressWarnings("deprecation")
-		int getMinutesFromDate=dateToDate.getHours()*60+dateToDate.getMinutes();
+		int getMinutesFromDate = dateToDate.getHours() * 60 + dateToDate.getMinutes();
 		@SuppressWarnings("deprecation")
-		int getMinutesFromCurrentDate=currentDateToDate.getHours()*60+currentDateToDate.getMinutes();
+		int getMinutesFromCurrentDate = currentDateToDate.getHours() * 60 + currentDateToDate.getMinutes();
 
-		
-		if((getMonthsFromCurrentDate==getMonthsFromDate)&&(getMinutesFromCurrentDate-getMinutesFromDate<=value))
+		if ((getMonthsFromCurrentDate == getMonthsFromDate)
+				&& (getMinutesFromCurrentDate - getMinutesFromDate <= value))
 			return true;
-		
-		return false;	
+
+		return false;
 
 	}
-	
-	public  String  getRandomString(int size) {
-	    int leftLimit = 97; // letter 'a'
-	    int rightLimit = 122; // letter 'z'
-	    int targetStringLength = size;
-	    Random random = new Random();
 
-	    String generatedString = passwordEncoder.encode(random.ints(leftLimit, rightLimit + 1)
-	      .limit(targetStringLength)
-	      .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-	      .toString());
-	    
-	   
-	    
-	    return generatedString;
+	public String getRandomString(int size) {
+		int leftLimit = 97; // letter 'a'
+		int rightLimit = 122; // letter 'z'
+		int targetStringLength = size;
+		Random random = new Random();
+
+		String generatedString = random.ints(leftLimit, rightLimit + 1).limit(targetStringLength)
+				.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
+
+		return generatedString;
+	}
+
+	public String generateVerificaionCode(int min,int max) {
+		int verificationCode = (min + new Random().nextInt(max));	
+
+		return Integer.toString(verificationCode);
+
 	}
 
 }

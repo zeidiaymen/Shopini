@@ -1,27 +1,30 @@
 package com.example.demo.service;
 
 import com.example.demo.repository.UserRepository;
-
-
+import com.example.demo.service.twilio.SmsService;
+import com.example.demo.service.twilio.Twilioproperties;
+import com.example.demo.utils.JwtUtil;
 import com.example.demo.utils.Utils;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
+import io.jsonwebtoken.ExpiredJwtException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import com.example.demo.entity.PasswordHistory;
 import com.example.demo.entity.User;
+import com.example.demo.entity.UserPasswordRequest;
 import com.example.demo.models.Address;
 import com.example.demo.models.MailRequest;
+import com.example.demo.models.SmsRequest;
 
-import java.util.Date;
-import java.io.File;
+import java.io.IOException;
 import java.net.SocketException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -40,16 +43,79 @@ public class UserService {
 	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	@Autowired
 	Utils utils;
+	@Autowired
+	UserPasswordRequestService userPasswordRequestService;
+	@Autowired
+	private JwtUtil jwtUtil;
+	@Autowired
+	private Twilioproperties twilioproperties;
+	@Autowired
+	private SmsService smsService;
 
 	public List<User> getUsers() {
 
 		return userRepository.findAll();
 
 	}
-	@Autowired  
+
+	@Autowired
 	ServletContext context;
-	String randomNamePicture=null;
-	public User addUser(User user,MultipartFile file ) throws SocketException {
+	String randomNamePicture = null;
+	
+	
+	public User addUser(User user, MultipartFile file,String role,String accountStatus,MailRequest mailRequest)  {
+		// Password
+		String encodedPassword = this.passwordEncoder.encode(user.getPassword());
+		user.setPassword(encodedPassword);
+		// CurrentDate
+		user.setCreatedAt(Utils.getCurrentDate());
+		//Role
+		user.setRole(role);
+		//AccountStatus
+		user.setAccountStatus(accountStatus);
+		// CurrentAddress
+		String ipAdress="";
+		try {
+			ipAdress = LocationService.MyIpAdress();
+		} catch (SocketException e1) {
+			e1.printStackTrace();
+		}
+		Address address = LocationService.CurrentLocation(ipAdress);
+		user.setAddress(address.getCity());
+		
+		User userEmail;
+		userEmail = this.findUserByEmail(user.getEmail());
+		// userEmail = userRepository.findByEmail(user.getEmail());
+		if (!(userEmail == null))
+			return null;
+		else {
+			// emailService.sendEmail(mailRequest);
+			try {
+			
+				user.setPicture(file.getBytes());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			
+
+			return user;
+
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	public User addUser(User user, MultipartFile file)  {
 		// Password
 		String encodedPassword = this.passwordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
@@ -57,18 +123,18 @@ public class UserService {
 
 		user.setCreatedAt(Utils.getCurrentDate());
 		// CurrentAddress
-		String ipAdress = LocationService.MyIpAdress();
+		String ipAdress="";
+		try {
+			ipAdress = LocationService.MyIpAdress();
+		} catch (SocketException e1) {
+			e1.printStackTrace();
+		}
 		Address address = LocationService.CurrentLocation(ipAdress);
 		user.setAddress(address.getCity());
 		// Activation Token
 		String activationToken = UUID.randomUUID().toString();
 		user.setActivationToken(activationToken);
-		
-		
-		
-		
-		
-		
+
 		MailRequest mailRequest = new MailRequest(user.getLastName().toUpperCase() + " " + user.getFirstName(),
 				user.getEmail(), "Verification de votre compte", "Veuillez verifier votre compte",
 				"Activer votre compte",
@@ -76,44 +142,47 @@ public class UserService {
 		// emailService.sendEmail(mailRequest);
 		// Fin
 		User userEmail;
-		userEmail=this.findUserByEmail(user.getEmail());
-		//userEmail = userRepository.findByEmail(user.getEmail());
+		userEmail = this.findUserByEmail(user.getEmail());
+		// userEmail = userRepository.findByEmail(user.getEmail());
 		if (!(userEmail == null))
 			return null;
 		else {
+			try {
+				user.setPicture(file.getBytes());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			user.setRole("USER");
-			User userSaved=userRepository.save(user);
+			User userSaved = userRepository.save(user);
 			PasswordHistory passwordHistory = new PasswordHistory(user, user.getPassword(), Utils.getCurrentDate());
 			passwordHistoryService.addPasswordHistory(passwordHistory);
-			this.savePicture(file,userSaved);
+
 			return user;
 
 		}
 	}
-	public void updatePictureName(String namePicture,User user)
-	{
-		user.setPicture(namePicture);
-		this.userRepository.save(user);
-	}
-	
 
-	public Boolean updatePasswordUser(String userId, String password) {
+	// public void updatePictureName(String namePicture, User user) {
+	// user.setPicture(namePicture);
+	// this.userRepository.save(user);
+	// }
 
-		Optional<User> user = userRepository.findById(userId);
+	public Boolean updatePasswordUser(User user, String password) {
 
 		return passwordHistoryService.checkPasswordHistory(user, password);
 
 	}
 
-	public User activateAccount(String activationToken) {
+	public Boolean activateAccount(String activationToken) {
 		User user;
-		user = userRepository.findByActivationToken(activationToken);
+		user = userRepository.findByActivationToken(activationToken).orElse(null);
 		if (!(user == null)) {
 			if (Utils.compareDateByMinutes(user.getCreatedAt(), 60)) {
 				user.setActivationToken(null);
 				user.setAccountStatus("VERIFIED");
 				userRepository.save(user);
-				return user;
+				return true;
 			}
 
 			else {
@@ -124,20 +193,18 @@ public class UserService {
 						"Activer votre compte",
 						"http://localhost:8081/SpringMVC/activateAccount?activationToken=" + newActivationToken);
 				emailService.sendEmail(mailRequest);
-				user.setCreatedAt(Utils.getCurrentDate());	
+				user.setCreatedAt(Utils.getCurrentDate());
 				
-
 
 			}
 		}
-		return null;
+		return false;
 	}
 
 	public User findUserByEmail(String email) {
-		User user;
-		user = userRepository.findByEmail(email).orElse(null);
-		return user;
-		
+
+		return userRepository.findByEmail(email).orElse(null);
+
 	}
 
 	public void deleteUser(String id) {
@@ -156,9 +223,11 @@ public class UserService {
 	public boolean checkAccountStatus(String email) {
 		User user = new User();
 		user = userRepository.findByEmail(email).orElse(null);
-		if (user.getAccountStatus().equals("VERIFIED"))
+		if (user != null) {
+			if (user.getAccountStatus().equals("VERIFIED"))
 
-			return true;
+				return true;
+		}
 
 		return false;
 	}
@@ -169,33 +238,160 @@ public class UserService {
 		return user.getRole();
 
 	}
-	
-	public Boolean savePicture(MultipartFile file,User user)
-	{
-		
-		boolean isExit = new File(context.getRealPath("/Images/")).exists();
-        if (!isExit)
-        {
-        	new File (context.getRealPath("/Images/")).mkdir();
-        	System.out.println("mk dir.............");
-        }
-        
-        String filename = file.getOriginalFilename();
-        System.out.println(filename);
-        System.out.println(FilenameUtils.getBaseName(filename));
-        String newFileName = FilenameUtils.getBaseName(filename)+user.getId()+"."+FilenameUtils.getExtension(filename);
-       
-        File serverFile = new File (context.getRealPath("/Images/"+File.separator+newFileName));
-        try
-        {
-        	
-        	 FileUtils.writeByteArrayToFile(serverFile,file.getBytes());
-        	 updatePictureName(newFileName,user);
-        	 
-        }catch(Exception e) {
-        	e.printStackTrace();
-        }
-		return true;
+
+	/*
+	 * public Boolean savePicture(MultipartFile file, User user) {
+	 * 
+	 * boolean isExit = new File(context.getRealPath("/Images/")).exists(); if
+	 * (!isExit) { new File(context.getRealPath("/Images/")).mkdir(); }
+	 * 
+	 * String filename = file.getOriginalFilename(); String randomString =
+	 * this.utils.getRandomString(8); String newFileName = randomString + "_" +
+	 * user.getId() + "." + FilenameUtils.getExtension(filename);
+	 * 
+	 * File serverFile = new File(context.getRealPath("/Images/" +
+	 * File.separator + newFileName)); try {
+	 * 
+	 * FileUtils.writeByteArrayToFile(serverFile, file.getBytes());
+	 * updatePictureName(newFileName, user);
+	 * 
+	 * } catch (Exception e) { e.printStackTrace(); } return true; }
+	 */
+
+	public byte[] getPictureByEmail(String email) {
+		User user;
+		user = this.findUserByEmail(email);
+		if (user != null)
+			return user.getPicture();
+		return null;
+
 	}
+	// public User updateUser(String email,String firstName,String
+	// lastName,String picture)
+	// {
+	// User user=this.findUserByEmail(email);
+	// if(user!=null)
+	// {
+	// if(!user.getFirstName().equals(firstName))
+	// user.setFirstName(firstName);
+	// if(!user.getLastName().equals(lastName))
+	// user.setLastName(lastName);
+	// if (!user.getPicture().equals(picture))
+	// user.setPicture(picture);
+	// if(!user.equals(this.findUserByEmail(email)))
+	// this.userRepository.save(user);
+	// return user;
+
+	// }
+	// return null;}
+	public User updateUser(User user) {
+		if (this.findUserByEmail(user.getEmail()) != null)
+			return this.userRepository.save(user);
+		return null;
+	}
+
+	public User getUserByToken(String token) {
+		try {
+			String email = this.jwtUtil.extractEmail(token);
+			if (email != null) {
+				User user = this.findUserByEmail(email);
+				if (user != null)
+
+					return user;
+
+			}
+		} catch (ExpiredJwtException expiredJwtException) {
+			return null;
+		}
+		return null;
+
+	}
+
+	public void forgetPasswordRequest(User user)
+
+	{
+		this.userPasswordRequestService.retrieveUserPasswordRequest(user);
+		String token = this.userPasswordRequestService.addUserPasswordRequest(user);
+
+		MailRequest mailRequest = new MailRequest(user.getLastName().toUpperCase() + " " + user.getFirstName(),
+				user.getEmail(), "Reset your password", "Click to resest your password", "Reset your password",
+				"http://localhost:4200/forgetPasswordPasswordForm/" + token);
+		this.emailService.sendEmail(mailRequest);
+
+	}
+
+	public Boolean checkUserPasswordRequestToken(User user, String token) {
+		User userToCheck = this.userPasswordRequestService.getUserByToken(token);
+		UserPasswordRequest userPasswordRequest = this.userPasswordRequestService.findByToken(token);
+
+		if (userPasswordRequest != null) {
+
+			Boolean checkTokenExpiration = Utils.compareDateByMinutes(userPasswordRequest.getCreatedAt(), 60);
+			if (userToCheck != null && userToCheck.getEmail().equals(user.getEmail()) && checkTokenExpiration) {
+				this.userPasswordRequestService.retrieveUserPasswordRequest(userPasswordRequest);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void updateUserPicture(User user, MultipartFile file) {
+		try {
+			user.setPicture(file.getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		this.userRepository.save(user);
+
+	}
+
+	public String sendSmsTwoFactorAuthentication(User user) {
+
+		String verificationCode = this.utils.generateVerificaionCode(10000, 90000);
+
+		if (this.sendSmsWhatsapp("+21695227678", verificationCode))
+
+			return verificationCode;
+		return null;
+
+	}
+
+	public Boolean sendSmsWhatsapp(String number, String verificationCode) {
+
+		SmsRequest smsRequest = new SmsRequest();
+		smsRequest.setNumber(number);
+		smsRequest.setMessage("Voici votre code de verification " + verificationCode);
+
+		String status = this.smsService.sendsms(smsRequest);
+		if ("sent".equals(status) || "queued".equals(status))
+			return true;
+		return false;
+
+	}
+
+	public Boolean sendSmsGsm(String number, String verificationCode) {
+		Twilio.init(this.twilioproperties.getAccountSid(), this.twilioproperties.getAuthToken());
+		System.out.println(this.twilioproperties.toString());
+		try {
+			Message.creator(new PhoneNumber(number), new PhoneNumber(this.twilioproperties.getFromNumber()),
+					"Voici votre code de verification " + verificationCode).create();
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+
+	}
+
+	/*
+	 * public void addPictureBase64(User user ,MultipartFile file){
+	 * 
+	 * 
+	 * 
+	 * try { user.setData(file.getBytes()); } catch (IOException e) {
+	 * e.printStackTrace(); } this.userRepository.save(user);
+	 * System.out.println(user.getData().toString());
+	 * 
+	 * }
+	 */
 
 }

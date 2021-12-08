@@ -30,7 +30,7 @@ public class UserServiceTest {
 		System.out.println(expected);
 		User user=new User();
 		user = new User("Seifeddine", "BENSALAH", "seifeddine.@gmail.Xfxr", "12345678", "MASCULIN",
-				"12345678", "picture");
+				"12345678");
 		MultipartFile file=null;
 		User savedUser = userService.addUser(user,file);
 		System.out.println(userService.getUsers().size());

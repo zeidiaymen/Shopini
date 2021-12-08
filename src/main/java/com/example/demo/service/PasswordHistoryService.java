@@ -20,9 +20,9 @@ public class PasswordHistoryService {
 	PasswordHistoryRepository passwordHistoryRepository;
 	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-	public Boolean checkPasswordHistory(Optional<User> user, String password) {
-
-		List<PasswordHistory> passwordHistoryByUserList = passwordHistoryRepository.findByUser(user.orElse(null));
+	public Boolean checkPasswordHistory(User user, String password) {
+		
+		List<PasswordHistory> passwordHistoryByUserList = passwordHistoryRepository.findByUser(user);
 
 		for (PasswordHistory passwordHistoryByUser : passwordHistoryByUserList) {
 			if (this.passwordEncoder.matches(password, passwordHistoryByUser.getPassword())) {
@@ -33,7 +33,7 @@ public class PasswordHistoryService {
 		}
 		String encodedPassword = this.passwordEncoder.encode(password);
 
-		PasswordHistory passwordHistory = new PasswordHistory(user.get(), encodedPassword, Utils.getCurrentDate());
+		PasswordHistory passwordHistory = new PasswordHistory(user, encodedPassword, Utils.getCurrentDate());
 
 		this.addPasswordHistory(passwordHistory);
 
