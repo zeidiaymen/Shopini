@@ -1,9 +1,10 @@
 package com.example.demo.controller;
 
+import java.io.IOException;
+
 import java.net.SocketException;
 
 import java.util.List;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +18,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.demo.entity.User;
 import com.example.demo.models.Address;
 import com.example.demo.models.AuthRequest;
+import com.example.demo.models.SmsRequest;
 import com.example.demo.service.EmailService;
 import com.example.demo.service.LocationService;
 import com.example.demo.service.PasswordHistoryService;
 import com.example.demo.service.UserService;
+import com.example.demo.service.twilio.SmsService;
 import com.example.demo.utils.JwtUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -41,80 +44,83 @@ public class UserController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
+	@Autowired
+	SmsService smsService;
+
 	@GetMapping(value = "users")
 	public ResponseEntity<List<User>> getUsers() {
-		List <User> users=userService.getUsers();
-		return new ResponseEntity<>(users,HttpStatus.OK);
-	}
-	@RequestMapping(value="addUser",method = RequestMethod.POST)
-
-	public User addAdmin(@RequestParam("file") MultipartFile file ,@RequestParam("user") String  userString) throws SocketException, JsonMappingException, JsonProcessingException {
-        User user= new ObjectMapper().readValue(userString, User.class);
-
-		return userService.addUser(user,file);
-
+		List<User> users = userService.getUsers();
+		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 
-	@PostMapping(value = "savePicture")
-	public Boolean savePicture(@RequestParam("file") MultipartFile file)
+	@RequestMapping(value = "addUser", method = RequestMethod.POST)
+
+	public User addUser(@RequestParam("file") MultipartFile file, @RequestParam("user") String userString)
 			throws SocketException, JsonMappingException, JsonProcessingException {
-		User user=null;
-		return userService.savePicture(file,user);
+		User user = new ObjectMapper().readValue(userString, User.class);
+
+		return userService.addUser(user, file);
+
+	}
+
+	@PostMapping(value = "addUserX")
+
+	public User addUserX(@RequestParam("user") String userString)
+			throws SocketException, JsonMappingException, JsonProcessingException {
+		MultipartFile file = null;
+		User user = new ObjectMapper().readValue(userString, User.class);
+
+		return userService.addUser(user, file);
 
 	}
 
 	@PostMapping("changePassword")
-	public Boolean check(@RequestParam String userId, String password) throws SocketException {
-
-		return userService.updatePasswordUser(userId, password);
+	public Boolean check(@RequestParam String email, String password) throws SocketException {
+		User user = this.userService.findUserByEmail(email);
+		return userService.updatePasswordUser(user, password);
 
 	}
 
 	@GetMapping(value = "/activateAccount")
-	public User activateAccount(@RequestParam String activationToken) {
+	public Boolean activateAccount(@RequestParam String activationToken) {
 		return userService.activateAccount(activationToken);
 
 	}
-	
+
 	@GetMapping(value = "/getUserByEmail")
 	public User getUserByEmail(@RequestParam String email) {
-		
-		User user =userService.findUserByEmail(email);
-		
+
 		return userService.findUserByEmail(email);
 
 	}
-	
+
 	@GetMapping(value = "/isEmailExist")
 	public Boolean isEmailExist(@RequestParam String email) {
-		
-		User user =userService.findUserByEmail(email);
-		if(user!=null)
+
+		User user = userService.findUserByEmail(email);
+		if (user != null)
 			return true;
-		
+
 		return false;
 
 	}
 
-	@GetMapping(value = "/test")
-	public Boolean addUserTest() throws SocketException {
-		List<User> users = userService.getUsers();
-		int expected = users.size();
-		System.out.println(expected);
-		for (int i = 0; i < 10; i++) {
-			Random r = new Random();
-			char c = (char) (r.nextInt(26) + 'a');
-
-			User user = new User();
-			user = new User("Seifeddine", "BENSALAH", "seifeddine.@Yahoo." + c, "12345678", "MASCULIN", "12345678",
-					"picture");
-			// User savedUser = userService.addUser(user);
-
-		}
-
-		return true;
-
-	}
+	/*
+	 * @GetMapping(value = "/test") public Boolean addUserTest() throws
+	 * SocketException { List<User> users = userService.getUsers(); int expected
+	 * = users.size(); for (int i = 0; i < 10; i++) { Random r = new Random();
+	 * char c = (char) (r.nextInt(26) + 'a');
+	 * 
+	 * User user = new User(); user = new User("Seifeddine", "BENSALAH",
+	 * "seifeddine.@Yahoo." + c, "12345678", "MASCULIN", "12345678", "picture");
+	 * // User savedUser = userService.addUser(user);
+	 * 
+	 * }
+	 * 
+	 * return true;
+	 * 
+	 * }
+	 */
 
 	@PostMapping(value = "/deleteUser")
 	public boolean deleteUser(@RequestParam String id) {
@@ -124,41 +130,151 @@ public class UserController {
 	}
 
 	@GetMapping(value = "/getAddress")
-	public String testX() {
+	public String getAddress() {
 
 		String ipAdress = "Null";
 		try {
 			ipAdress = LocationService.MyIpAdress();
 
 		} catch (SocketException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Address address = LocationService.CurrentLocation(ipAdress);
 
 		return address.getCity();
 
-		// return customUserDetailsService.getUser().getId();
-
 	}
 
-	@PostMapping("/authenticate/{email}/{password}")
+	@GetMapping("/authenticate")
 
-	public String generateToken(@PathVariable(name="email") String email,@PathVariable(name="password") String password ) throws Exception {
-		 AuthRequest authRequest = new AuthRequest(email,password);
+	public String generateToken(@RequestParam String email, @RequestParam String password) throws Exception {
+		AuthRequest authRequest = new AuthRequest(email, password);
+
+		try {
+			authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
+		} catch (Exception ex) {
+			return "False";
+		}
 		if (userService.checkAccountStatus(authRequest.getEmail())) {
-
-			try {
-				authenticationManager.authenticate(
-						new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
-			} catch (Exception ex) {
-				throw new Exception("inavalid username/password");
-			}
 			return jwtUtil.generateToken(authRequest.getEmail());
 		}
 
+		else
+			return "Not Verified";
+
+	}
+
+	@GetMapping("/getUserByToken")
+
+	public User getUserByToken(@RequestParam String token) throws Exception {
+
+		return this.userService.getUserByToken(token);
+
+	}
+
+	@GetMapping("/getPictureByEmail")
+
+	public byte[] getPictureByEmail(@RequestParam String email) throws Exception {
+		return this.userService.getPictureByEmail(email);
+
+	}
+
+	@PostMapping("/updateUser")
+
+	public User updateUser(@RequestBody User user) throws JsonMappingException, JsonProcessingException {
+
+		return this.userService.updateUser(user);
+	}
+
+	@PostMapping("/updateUserPicture")
+
+	public void updateUserPicture(@RequestParam("file") MultipartFile userPicture, @RequestParam String token)
+			throws IOException {
+
+		User user = this.userService.getUserByToken(token);
+		if (user != null)
+			this.userService.updateUserPicture(user, userPicture);
+
+	}
+
+	@PostMapping("/changePasswordUser")
+
+	public Boolean changePasswordUser(@RequestParam("password") String password, @RequestParam("token") String token) {
+
+		User user = this.userService.getUserByToken(token);
+		if (user != null) {
+			return this.userService.updatePasswordUser(user, password);
+		}
+
+		return false;
+	}
+
+	@PostMapping("/forgetPasswordRequest")
+
+	public Boolean forgetPasswordRequest(@RequestParam("email") String email) {
+
+		User user = this.userService.findUserByEmail(email);
+		if (user != null && user.getAccountStatus().equals("VERIFIED")) {
+
+			this.userService.forgetPasswordRequest(user);
+			return true;
+		}
+
+		return false;
+	}
+
+	@PostMapping("/checkUserPasswordRequestToken")
+
+	public Boolean checkUserPasswordRequestToken(@RequestParam("email") String email,
+			@RequestParam("token") String token) {
+
+		User user = this.userService.findUserByEmail(email);
+		if (user != null) {
+			return this.userService.checkUserPasswordRequestToken(user, token);
+		}
+		return false;
+	}
+
+	@GetMapping("/sendSmsTwoFactorAuthentication")
+
+	public String sendSmsTwoFactorAuthentication(@RequestParam String token) {
+
+		User user = this.userService.getUserByToken(token);
+		if (user != null) {
+			return this.userService.sendSmsTwoFactorAuthentication(user);	
+
+		}
+		return null;
+
+	}
+
+	@PostMapping("/sendSms")
+
+	public String sendSms() {
+
+
+		SmsRequest smsRequest = new SmsRequest();
+		smsRequest.setNumber("+21695227678");
+		smsRequest.setMessage("Voici votre code de verification " + "1");
+
+		String status = this.smsService.sendsms(smsRequest);
+		if ("sent".equals(status) || "queued".equals(status)) {
+			return "true";
+		}
 		return "false";
 
 	}
+
+	/*
+	 * 
+	 * @PostMapping(value="/addPictureBase64", produces = "image/png")
+	 * 
+	 * public void addPictureBase64(@RequestParam("file") MultipartFile file) {
+	 * 
+	 * User
+	 * user=this.userService.findUserByEmail("seifeddine.bensalah@gmail.com");
+	 * if(user!=null) this.userService.addPictureBase64(user, file); }
+	 */
 
 }
