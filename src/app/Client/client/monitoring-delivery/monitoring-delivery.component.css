@@ -1,0 +1,121 @@
+.pic-1 {
+  /* background-image: url("https://www.wallpaperflare.com/static/504/223/817/earth-night-space-continents-wallpaper.jpg"); */
+  background-image: url("https://images6.alphacoders.com/400/thumb-1920-400645.jpg");
+  min-height: 200px;
+  position: absolute;
+  top: 800px;
+  left: 0;
+  min-width: 100%;
+  margin-top: -173px;
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+
+  background-size: cover;
+}
+
+.pic-2 {
+  /* background-image: url("https://www.wallpaperflare.com/static/504/223/817/earth-night-space-continents-wallpaper.jpg"); */
+  background-image: url("https://i.pinimg.com/736x/ca/08/cf/ca08cff753ccdc0c5666300bfb821fce.jpg");
+  min-height: 200px;
+  margin-top: -200px;
+  min-width: 100%;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+a,
+input,
+p {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+h1 {
+  font-size: 30px;
+  color: black;
+  text-transform: uppercase;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 15px;
+}
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+.tbl-header {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.tbl-content {
+  height: 300px;
+  overflow-x: auto;
+  margin-top: 0px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+th {
+  padding: 30px 19px 20px 30px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 15px;
+  color: black;
+  text-transform: uppercase;
+}
+#track {
+  margin-top: 20px;
+}
+
+td {
+  padding: 40px 30px 30px 30px;
+
+  font-size: 13px;
+  color: black;
+}
+
+/* demo styles */
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+body {
+  background: -webkit-linear-gradient(left, #25c481, #25b7c4);
+  background: linear-gradient(to right, #25c481, #25b7c4);
+  font-family: "Roboto", sans-serif;
+}
+section {
+  margin: 50px;
+}
+
+/* follow me template */
+.made-with-love {
+  margin-top: 40px;
+  padding: 10px;
+  clear: left;
+  text-align: center;
+  font-size: 10px;
+  font-family: arial;
+  color: #fff;
+}
+.made-with-love i {
+  font-style: normal;
+  color: #f50057;
+  font-size: 14px;
+  position: relative;
+  top: 2px;
+}
+.made-with-love a {
+  color: #fff;
+  text-decoration: none;
+}
+.made-with-love a:hover {
+  text-decoration: underline;
+}
+
+/* for custom scrollbar for webkit browser*/
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}

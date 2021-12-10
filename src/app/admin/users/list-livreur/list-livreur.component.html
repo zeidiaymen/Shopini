@@ -1,0 +1,69 @@
+<div class="container">
+    <h2> {{livreurs.length}} Livreurs</h2>
+    <div class="form-outline">
+        <input placeholder="Search"type="search" id="form1" class="form-control" style="width: 250px;"[(ngModel)]="inputSearch" (ngModelChange)="search()"/>
+      </div>
+    <div class="row col-md-6 col-md-offset-2 custyle">
+        <table class="table table-striped custab" >
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Sexe</th>
+                    <th>Tel</th>
+                    <th>Address</th>
+                    <th>Solde</th>
+                    <th>Percentage</th>
+                    <th>Status</th>
+                    <th>Changer Status</th>
+                    <th >Change Percentage</th>
+
+
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let livreur of livreurs ;let i = index">
+                    <td>{{i}}</td>
+                    <td>{{livreur.firstName}}</td>
+                    <td>{{livreur.lastName}}</td>
+                    <td>{{livreur.email}}</td>
+                    <td>{{livreur.sexe}}</td>
+                    <td>{{livreur.tel}}</td>
+                    <td>{{livreur.address}}</td>
+                    <td>{{livreur.solde}} DT</td>
+                    <td >{{livreur.pourcentage}}%</td>
+                    <td>{{livreur.accountStatus}}</td>
+                    <td> 
+                        <button type="button" class="btn btn-light" (click)="verifUserOrNot(livreur.email)">
+
+                            Change</button>
+
+                        
+                    </td>
+
+
+
+                    <td weight="100"><button type="button" class="btn btn-light" (click)="changePourcentage()">
+
+                            Change
+
+                        </button>
+
+                        <div *ngIf="childComponentClicked&&!checkChildConfirmButton">
+                            <app-change-livreur (parentFunction)="checkChildConfirm($event)"[hero]="livreur"></app-change-livreur>
+
+
+
+                        </div>
+                    </td>
+
+
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

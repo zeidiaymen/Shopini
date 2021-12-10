@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<title>Delivery</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="https://www.w3schools.com/lib/w3.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amatic+SC">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Amatic SC", sans-serif}
+</style>
+<body>
+<!-- Start Content -->
+<div id="home" class="w3-content">
+
+<!-- About -->
+<div id="about" class="w3-container w3-red w3-grayscale w3-xlarge w3-padding-64">
+<h1 class="w3-center w3-jumbo">bird delivery service</h1>
+<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit numquam debitis ducimus natus et minima laudantium quasi. Perferendis aliquam fugit minima nisi praesentium adipisci accusantium, dolorem omnis, eaque dolore ipsa molestiae quaerat? Architecto, nobis. Nemo quae optio doloribus veniam iste.</p>
+<p><strong>The Chef?</strong> Mr. Italiano himself<img src="https://us.123rf.com/450wm/benzoix/benzoix1708/benzoix170800207/84925533-concept-de-livraison-portrait-d-un-livreur-ou-d-un-messager-afro-am%C3%A9ricain-avec-bo%C3%AEte-montrant-une-t.jpg?ver=6" style="width:150px" class="w3-circle w3-right" alt="Chef"></p>
+<p>We are proud of our interiors.</p>
+<p class="w3-padding-16 w3-stretch">
+<img src="https://www.globalsign.com/application/files/2516/0498/6435/General_Banner_Online_Shopping_Blog_1_APAC_2020_09_03.jpg" style="width:100%" alt="Restaurant">
+</p>
+<div class="m-5">
+    <table class="table " style="overflow: hidden;">
+        <thead>
+            <tr class="p-3">
+                <th>Name</th>
+                <th>Address</th>
+                <th>Cellphone</th>
+                <th>Weight</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="p-3" *ngFor="let x of list ; let i = index " style="color:white">
+                <td scope="row" *ngIf="x.status == 'free' ">{{x.name}}</td>
+                <td *ngIf="x.status == 'free' ">{{x.address}}</td>
+                <td *ngIf="x.status == 'free' ">{{x.cellPhone}}</td>
+                <td *ngIf="x.status == 'free' ">{{x.weight}}</td>
+                <button type="button" class="btn btn-outline-dark btn-lg" (click)="takeDel(x.id)" *ngIf="x.status == 'free'  " [hidden]="dev >0"> pick it </button>
+            </tr>
+       
+        </tbody>
+    </table>
+</div>
+<img src="https://i2.wp.com/www.recruter.tn/wp-content/uploads/2021/07/218004087_182551867253952_4583101087753809481_n.jpg?fit=800%2C534&ssl=1" style="width: 100%;"/>
+
+<h1><b>Opening Hours</b></h1>
+<div class="w3-row">
+<div class="w3-half">
+  <p>Mon & Tue CLOSED</p>
+  <p>Wednesday 10.00 - 24.00</p>
+  <p>Thursday 10:00 - 24:00</p>
+</div>
+<div class="w3-half">
+  <p>Friday 09:00 - 23:00</p>
+  <p>Saturday 10:00 - 23:00</p>
+  <p>Sunday Closed</p>
+</div>
+</div>    
+</div>
+
+<!-- End Content -->
+</div>
+</body>
+</html>

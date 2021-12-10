@@ -1,0 +1,11 @@
+input {
+    width: 300px ;
+}
+.form-check-input{
+    width:20%;
+    margin-left: 1px ;
+}
+.form-check-label
+{
+margin-left:15px;
+}

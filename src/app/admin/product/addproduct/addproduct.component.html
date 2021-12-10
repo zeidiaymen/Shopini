@@ -1,0 +1,29 @@
+<p>add-product-td works!</p>
+<form #f="ngForm">
+  <div  class="form-group">
+    <div ngForm #f1="ngForm">
+      <label> code</label>
+      <br><input type="text" class="form-control"  name="code" [(ngModel)]="product.code" required #code="ngModel">
+      <label> libelle</label>
+      <br><input type="text" class="form-control"  name="libelle" [(ngModel)]="product.libelle" required #libelle="ngModel">
+      <label> picture</label>
+      <br><input type="text" class="form-control"  name="picture" [(ngModel)]="product.picture" required #picture="ngModel">
+      <label> prixUnitaire</label>
+      <br><input type="text" class="form-control"  name="prixUnitaire" [(ngModel)]="product.prixUnitaire" required #prixUnitaire="ngModel">
+      <label> detailProduit dateCreation</label>
+      <br><input type="text" class="form-control"  name="dateCreation" [(ngModel)]="productdetail.dateCreation" required #dateCreation="ngModel">
+      <label> detailProduit dateLimiteConsommation</label>
+      <br><input type="text" class="form-control"  name="dateLimiteConsommation" [(ngModel)]="productdetail.dateLimiteConsommation" required #detailProduit.dateLimiteConsommation="ngModel">
+      <label> detailProduit dateDerniereModification</label>
+      <br><input type="text" class="form-control"  name="dateDerniereModification" [(ngModel)]="productdetail.dateDerniereModification" required #dateDerniereModification="ngModel">
+      <label> detailProduit categorieProduit</label>
+      <br><input type="text" class="form-control"  name="categorieProduit" [(ngModel)]="productdetail.categorieProduit" required #categorieProduit="ngModel">
+      <label> detailProduit quantite</label>
+      <br><input type="text" class="form-control"  name="quantite" [(ngModel)]="productdetail.quantite" required #quantite="ngModel">
+      <label>  fournisseur</label>
+      <br><input type="text" class="form-control"  name="fournisseur" [(ngModel)]="idf" required #fournisseur="ngModel">
+
+    </div>
+    <br><input type="submit" value="Ajouter" (click)="addproduct()"  >
+  </div>
+</form>

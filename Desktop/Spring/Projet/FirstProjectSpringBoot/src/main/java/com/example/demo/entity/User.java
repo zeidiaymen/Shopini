@@ -8,12 +8,12 @@ import org.hibernate.annotations.Parameter;
 
 import org.hibernate.annotations.GenericGenerator;
 
-@Entity
+
 @Table(name = "user")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="role")
+@DiscriminatorColumn(name="DESCRIMINATOR")
 @DiscriminatorValue("USER")
-
+@Entity
 
 public class User implements Serializable {
 

@@ -1,0 +1,42 @@
+<div class="container d-flex flex-column align-items-center mt-5">
+  <h2 style="letter-spacing: 5px">hello Mr "{{ client.firstName }}"</h2>
+
+  <div class="mt-5 d-flex">
+    <img
+      style="width: 500px; margin-bottom: 150px"
+      src="https://assets.website-files.com/60671b7fdf5735ae5e89010c/608199b0349bcfc011c142c8_1_F6rAPPRNJYB_MDJSQtKbXw.jpeg"
+    />
+    <p
+      style="
+        border: 2px solid crimson;
+        margin-left: 150px;
+        margin-top: 120px;
+        info: 200px;
+        height: 250px;
+        padding: 60px;
+      "
+      *ngIf="info == 'free'"
+    >
+      Your delivery is not yet taken by a delivery man we will back ASAP or
+      check if delivery status is changed to taken in the delivery section
+      <span style="color: crimson">#ShopiniTEAM</span>
+    </p>
+    <p
+      #exp
+      *ngIf="info == 'expired'"
+      style="
+        border: 2px solid crimson;
+        margin-left: 120px;
+        margin-top: 150px;
+        info: 200px;
+        height: 250px;
+        padding: 60px;
+      "
+    >
+      your delivery is not taken by any of our deliveries due to the important
+      number of opertation we are sorry about that , you will get refund in the
+      next 24h
+      <span style="color: crimson">#ShopiniTEAM</span>
+    </p>
+  </div>
+</div>

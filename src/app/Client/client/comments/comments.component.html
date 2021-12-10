@@ -1,0 +1,108 @@
+<body>
+  <div class="container">
+    <div class="col-md-12" id="fbcomment">
+      <div class="header_comment">
+        <div class="row">
+          <div class="col-md-6 text-left">
+            <span class="count_comment">{{ nbComments }} Comments</span>
+          </div>
+          <div class="col-md-6 text-right">
+            <span class="sort_title">Sort by</span>
+            <select class="sort_by" (change)="sorting($event)">
+              <option>Newest</option>
+              <option>Oldest</option>
+              <option>Popular</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="body_comment">
+        <div class="row">
+          <div class="avatar_comment col-md-1">
+            <img
+              src="https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg"
+              alt="avatar"
+            />
+          </div>
+          <div class="box_comment col-md-11">
+            <textarea
+              [(ngModel)]="data.comments"
+              class="commentar"
+              placeholder="Add a comment..."
+            ></textarea>
+            <div class="box_post">
+              <div class="pull-right">
+                <button (click)="postComment()" type="button" value="1">
+                  Post
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <ul
+            id="list_comment"
+            class="col-md-12"
+            *ngFor="let x of list; let i = index"
+          >
+            <!-- Start List Comment 1 -->
+
+            <div [hidden]="i > 3 && show == true">
+              <li class="box_result row">
+                <div class="avatar_comment col-md-1">
+                  <img
+                    src="https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg"
+                    alt="avatar"
+                  />
+                </div>
+
+                <div class="result_comment col-md-4" style="margin-left: 15px">
+                  <h4>{{ list[i].c.firstName }}</h4>
+                  <p>{{ list[i].comments }}</p>
+
+                  <div class="tools_comment">
+                    <a class="like">
+                      <i
+                        *ngIf="!list[i].likesPersons.includes(ClientId)"
+                        class="fa fa-thumbs-up"
+                        aria-hidden="true>"
+                        (click)="increaseLike(list[i].id)"
+                      ></i>
+                      <i
+                        *ngIf="list[i].likesPersons.includes(ClientId)"
+                        class="fa fa-thumbs-down"
+                        aria-hidden="true"
+                        (click)="decreasingLike(list[i].id)"
+                      ></i>
+                    </a>
+                    <span aria-hidden="true"> · </span>
+                    <span class="count">{{ list[i].like }}</span>
+                    <span aria-hidden="true"> . </span>
+                    <a *ngIf="ClientId === list[i].c.id">
+                      <i
+                        class="fa fa-trash"
+                        aria-hidden="true"
+                        (click)="deleteComment(list[i].id, i)"
+                      ></i>
+                    </a>
+                    <span aria-hidden="true"> . </span>
+                    <span>{{ dateParse[i] }}</span>
+                  </div>
+                </div>
+              </li>
+            </div>
+          </ul>
+          <input
+            [hidden]="nbComments <= 3"
+            class="show_more"
+            type="button"
+            (click)="showMore()"
+            [value]="show ? 'Show more comments' : 'show less comments'"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

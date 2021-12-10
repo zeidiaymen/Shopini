@@ -1,0 +1,57 @@
+<div formGroupName="addressForm">
+
+  <div class="form-label-group">
+    <label>Full Name*</label>
+    <input type="text" class="form-control" name="name" formControlName="name" />
+  <div *ngIf="isInvalid('name')">
+    <p *ngIf="required('name')">
+      this field is required
+    </p>
+    <p *ngIf="pattern('name')">should start with A-Z</p>
+  </div>
+  </div>
+  <div class="form-label-group">
+    <label>Email*</label>
+    <input type="text" class="form-control" name="lastName" formControlName="email" />
+    <div *ngIf="isInvalid('email')">
+      <p *ngIf="required('email')">
+        this field is required
+      </p>
+      <p *ngIf="pattern('email')">should be with this form xx@xx.xx</p>
+    </div>
+  </div>
+  <div class="form-label-group">
+    <label>Subject*</label>
+    <input type="text" class="form-control" name="phone" formControlName="sub" />
+    <div *ngIf="isInvalid('sub')">
+      <p *ngIf="required('sub')">
+        this field is required
+      </p>
+      <p *ngIf="length('sub')">max length is 5</p>
+    </div>
+  </div>
+  <div class="form-label-group">
+    <label>Message*</label>
+    <input type="text" class="form-control" name="street" formControlName="message" />
+    <div *ngIf="isInvalid('message')">
+      <p *ngIf="required('message')">
+        this field is required
+      </p>
+      <p *ngIf="length('message')">max length is 700</p>
+    </div>
+
+    
+    <div class="form-label-group">
+      <label>Attach a file*</label>
+      <input type="file" class="form-control" name="street" formControlName="file" (change)="onFileChange($event)" />
+      <div *ngIf="isInvalid('message')">
+        <p *ngIf="required('message')">
+          this field is required
+        </p>
+      </div>
+  
+
+  </div>
+  
+
+</div>

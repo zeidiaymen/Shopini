@@ -1,0 +1,128 @@
+
+
+<div
+  class="container"
+  style="width: 900px; margin-top: 80px; margin-bottom: 80px"
+  *ngIf="show1"
+>
+  <div style="display: flex; justify-content: row; margin-bottom: 570px">
+    <div class="main-pic" style="margin-top: 70px">
+      <img
+        src="https://image.freepik.com/vecteurs-libre/chemin-concept-illustration_114360-1191.jpg"
+        style="width: 550px"
+        height="400px"
+      />
+    </div>
+    <div>
+      <h1 style="margin-top: 190px; letter-spacing: 1px">
+        Monitoring Delivery <i class="fa fa-map-marker" aria-hidden="true"></i>
+      </h1>
+      <p>
+        <span style="color: crimson"> We</span> provide this feature for your
+        safety you can track your delivery from any place in the world , every
+        shipping operation will take 48 hours or you will get refund
+      </p>
+    </div>
+  </div>
+  <div class="pic-1"></div>
+  <hr />
+  <div class="gloabl-track" style="display: flex; flex-direction: row-reverse">
+    <div id="pic-2"></div>
+
+    <div class="table" style="margin-top: -200px;">
+      <table class="table" style="margin-bottom: 380px">
+        <thead>
+          <tr
+            style="
+              border: 1px solid black;
+              padding: 25px 25px 25px 25px;
+            "
+          >
+            <th>Addresse</th>
+            <th>Estimated time</th>
+            <th>Weight</th>
+            <th>Status</th>
+            <th><i class="fa fa-map-marker" aria-hidden="true"></i></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of list; let i = index">
+            <td scope="row">{{ x.address }}</td>
+
+            <td>
+              <p *ngIf="dateFixer[i] > 0 && x.status =='free' ">{{ tim[i] }}</p>
+              <p *ngIf="dateFixer[i] <= 0 && x.status== 'free'" style="color: red">expired</p>
+              <p *ngIf=" x.status== 'taken'" style="color:green">done</p>
+              
+            </td>
+            <td>{{ x.weight }}</td>
+            <td
+              style="font-weight: 500"
+              [ngStyle]="{
+                color: x.status == 'free' ? 'red' : 'green'
+              }"
+            >
+              <p *ngIf="dateReminder[i] > 0 || x.status == 'taken' ">{{ x.status }}</p>
+    
+              <p *ngIf="dateReminder[i] < 0 && x.status=='free'">expired</p>
+    
+            </td>
+            <a
+            style="cursor: pointer;"
+              [hidden]="x.status != 'taken'"
+              class="alert-link"
+              (click)="getLocalion(x.id)"
+              >
+              <h6 id="track"             style="margin-left: 9px;"
+              >Track it</h6>
+          </a>
+            <div
+              *ngIf="x.status == 'free' || x.status == 'expired'"
+              style="margin-top: 10px"
+            >
+              <a [routerLink]="['/client/info', idCl, x.status]" class="alert-link">
+                See details</a
+              >
+            </div>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="pic-4" style="margin-top: -400px"></div>
+  <div [ngClass]="show1 ? 'doc' : 'noClass'"></div>
+  <div
+    style="display: flex; flex-direction: row-reverse; margin-bottom: 250px"
+    class="container"
+  >
+    <div>
+      <img
+        style="height: 500px; margin-top: 100px"
+        src="https://image.freepik.com/vecteurs-libre/heureux-homme-tenant-cinq-etoiles-or-client-examen-illustration-plate-medias-sociaux_74855-14060.jpg"
+      />
+    </div>
+    <div>
+      <h1 style="margin-top: 250px; letter-spacing: 1px">
+        Customer reviews <i class="fas fa-comments"></i>
+      </h1>
+      <p>
+        you will find down bellow our customers review about our delivery system
+        please feel free to drop you opinion , we will be pleased to hear from
+        you
+      </p>
+    </div>
+  </div>
+</div>
+
+<app-map
+  *ngIf="show"
+  [long]="Lat"
+  [larg]="Long"
+  (not)="get($event)"
+  Style="margin-top: 500px;"
+></app-map>
+<div style="margin-top: 80px">
+
+  <app-comments *ngIf="show1" style="margin-top: -400px;"></app-comments>
+</div>

@@ -1,0 +1,11 @@
+.casino {
+    position: absolute;
+    top:10;
+    height: 700px;
+    width: 100%;
+    background-image: url('https://t3.ftcdn.net/jpg/01/59/07/92/360_F_159079250_3oo6EuNF6gPjNe3ABeDhMjzzEDlGVdjO.jpg');
+    background-repeat: no-repeat;
+    opacity: 0.9;
+    background-size: cover;
+
+}
