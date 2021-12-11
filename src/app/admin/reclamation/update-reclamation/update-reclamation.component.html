@@ -1,7 +1,0 @@
-<form #f="ngForm">
-    <label>Content</label>
-    <input type="text" name="content" [(ngModel)]="reclamation.content">
-    <label>Category</label>
-    <input type="text" name="category" [(ngModel)]="reclamation.category">
-    <input type="submit" value="add" (click)="sendNotifToParent(f.value)">
-    </form>
