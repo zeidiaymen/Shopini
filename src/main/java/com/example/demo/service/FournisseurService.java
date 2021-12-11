@@ -62,6 +62,11 @@ public class FournisseurService {
 		return this.fournisseurRepository.save(fournisseur);
 
 	}
+	
+	public int sizeFournisseurs(){
+		return this.fournisseurRepository.sizeFournisseur();	
+		}
+	
 
 	public Fournisseur getFournisseurByEmail(String email) {
 

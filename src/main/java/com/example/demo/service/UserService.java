@@ -379,6 +379,22 @@ public class UserService {
 		 this.userRepository.save(user);
 		 return user.getTwoFactorAuthentication();
 	}
+	
+	public int sizeUsers(){
+		return this.userRepository.sizeUsers();
+	}
+	
+	public int sizeUsersNotVerified(){
+		return this.userRepository.sizeUsersNotVerified();
+	}
+	
+	public int sizeUsersVerified(){
+		return this.userRepository.sizeUsersVerified();
+	}
+	
+	public int sizeUsersByCountry(String address){
+		return this.userRepository.sizeUsersByCountry(address);
+	}
 
 	/*
 	 * public void addPictureBase64(User user ,MultipartFile file){

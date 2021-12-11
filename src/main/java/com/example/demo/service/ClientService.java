@@ -68,5 +68,10 @@ public class ClientService {
 		return clientRepository.findAll();
 
 	}
+	
+	public int sizeClients(){
+		return this.clientRepository.sizeClients();
+	}
+	
 
 }

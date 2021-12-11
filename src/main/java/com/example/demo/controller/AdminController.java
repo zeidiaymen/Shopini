@@ -47,5 +47,10 @@ public class AdminController {
 		return new ResponseEntity<>(admins, HttpStatus.OK);
 
 	}
+	
+	@GetMapping(value = "/sizeAdmins")
+	public int sizeAdmins() {
+		return this.adminService.sizeAdmins();
+	}
 
 }

@@ -56,6 +56,12 @@ public class FournisseurController {
 
 	}
 	
+	@GetMapping(value = "/sizeFournisseurs")
+	public int sizeFournisseurs() {
+		return this.fournisseurService.sizeFournisseurs();
+	}
+	
+	
 	
 	
 

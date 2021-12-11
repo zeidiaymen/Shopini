@@ -64,6 +64,11 @@ public class LivreurService {
 	}
 	
 	
+	public int sizeLivreur(){
+		return this.livreurRepository.sizeLivreur();
+	}
+	
+	
 	public List<Livreur> getLivreurs() {
 
 		return livreurRepository.findAll();

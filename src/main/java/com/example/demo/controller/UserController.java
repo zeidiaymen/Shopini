@@ -235,8 +235,8 @@ public class UserController {
 
 		User user = this.userService.getUserByToken(token);
 		if (user != null) {
-			// return this.userService.sendSmsTwoFactorAuthentication(user);
-			return "3";
+			return this.userService.sendSmsTwoFactorAuthentication(user);
+			
 		}
 		return null;
 
@@ -285,6 +285,26 @@ public class UserController {
 		return null;
 
 	}
+	@GetMapping(value = "/sizeUsers")
+	public int sizeUsers() {
+		return this.userService.sizeUsers();
+	}
+	
+	@GetMapping(value = "/sizeUsersVerified")
+	public int sizeUsersVerified() {
+		return this.userService.sizeUsersVerified();
+	}
+	
+	@GetMapping(value = "/sizeUsersNotVerified")
+	public int sizeUsersNotVerified() {
+		return this.userService.sizeUsersNotVerified();
+	}
+	
+	@GetMapping(value = "/sizeUsersByCountry")
+	public int sizeUsersNotVerified(@RequestParam String address) {
+		return this.userService.sizeUsersByCountry(address);
+	}
+
 
 	/*
 	 * 

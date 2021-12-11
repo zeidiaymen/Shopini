@@ -62,5 +62,10 @@ public class AdminService {
 		return adminRepository.findAll();
 
 	}
+	
+	public int sizeAdmins(){
+		return this.adminRepository.sizeAdmins();
+	}
+	
 
 }

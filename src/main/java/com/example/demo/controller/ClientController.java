@@ -52,5 +52,11 @@ public class ClientController {
 		return new ResponseEntity<>(clients, HttpStatus.OK);
 
 	}
+	
+	@GetMapping(value = "/sizeClients")
+	public int sizeClients() {
+		return this.clientService.sizeClients();
+	}
+	
 
 }

@@ -48,6 +48,11 @@ public class LivreurController {
 
 	}
 	
+	@GetMapping(value = "/sizeLivreurs")
+	public int getCountUser() {
+		return this.livreurService.sizeLivreur();
+	}
+	
 	
 	@PostMapping(value = "changeLivreur")
 
