@@ -1,10 +1,13 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.entity.Livreur;
 import com.example.demo.entity.Livreur;
 import com.example.demo.entity.PasswordHistory;
 import com.example.demo.entity.User;
@@ -28,7 +31,7 @@ public class LivreurService {
 	@Autowired
 	PasswordHistoryService passwordHistoryService;
 
-	public Livreur addLivreur(Livreur livreur, MultipartFile file) {
+	public Livreur addLivreur(Livreur livreur) {
 		int pourcentage =livreur.getPourcentage();
 		int solde=livreur.getSolde();
 		User user = new Livreur();
@@ -41,7 +44,7 @@ public class LivreurService {
 				user.getEmail(), "Vous avez ete ajoute comme Livreur avec shopini",
 				"Votre mot de passe est :" + password, "Consulter", "http://localhost:4200/login");
 
-		user = userService.addUser(user, file, "LIVREUR", "VERIFIED", mailRequest);
+		user = userService.addUser(user, null, "LIVREUR", "VERIFIED", mailRequest);
 
 		if (user != null) {
 			String encodedPassword = this.passwordEncoder.encode(password);
@@ -57,6 +60,24 @@ public class LivreurService {
 			return livreur;
 		}
 		return null;
+
+	}
+	
+	
+	public List<Livreur> getLivreurs() {
+
+		return livreurRepository.findAll();
+
+	}
+	
+	public Livreur changeLivreur(Livreur livreur) {
+		return this.livreurRepository.save(livreur);
+
+	}
+
+	public Livreur getLivreurByEmail(String email) {
+
+		return this.livreurRepository.findByEmail(email).orElse(null);
 
 	}
 

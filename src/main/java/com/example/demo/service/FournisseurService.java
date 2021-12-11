@@ -1,9 +1,11 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.entity.Fournisseur;
 import com.example.demo.entity.PasswordHistory;
@@ -28,7 +30,7 @@ public class FournisseurService {
 	@Autowired
 	PasswordHistoryService passwordHistoryService;
 
-	public Fournisseur addFournisseur(Fournisseur fournisseur, MultipartFile file) {
+	public Fournisseur addFournisseur(Fournisseur fournisseur) {
 		User user = new Fournisseur();
 		user = (User) fournisseur;
 
@@ -39,7 +41,7 @@ public class FournisseurService {
 				user.getEmail(), "Vous avez ete ajoute comme fournisseur avec shopini",
 				"Votre mot de passe est :" + password, "Consulter", "http://localhost:4200/login");
 
-		user = userService.addUser(user, file, "FOURNISSEUR", "VERIFIED", mailRequest);
+		user = userService.addUser(user, null, "FOURNISSEUR", "VERIFIED", mailRequest);
 
 		if (user != null) {
 			String encodedPassword = this.passwordEncoder.encode(password);
@@ -56,4 +58,21 @@ public class FournisseurService {
 
 	}
 
+	public Fournisseur changeFournisseur(Fournisseur fournisseur) {
+		return this.fournisseurRepository.save(fournisseur);
+
+	}
+
+	public Fournisseur getFournisseurByEmail(String email) {
+
+		return this.fournisseurRepository.findByEmail(email).orElse(null);
+
+	}
+	
+	
+	public List<Fournisseur> getFournisseurs() {
+
+		return fournisseurRepository.findAll();
+
+	}
 }

@@ -47,7 +47,7 @@ public class Utils {
 		return formatter.format(date);
 	}
 
-	public static boolean compareDateByMonths(String date, int value) { // retourne
+	public  boolean compareDateByMonths(String date, int value) { // retourne 
 																		// false
 																		// quand
 																		// la
@@ -145,8 +145,8 @@ public class Utils {
 		return generatedString;
 	}
 
-	public String generateVerificaionCode(int min,int max) {
-		int verificationCode = (min + new Random().nextInt(max));	
+	public String generateVerificaionCode(int min, int max) {
+		int verificationCode = (min + new Random().nextInt(max));
 
 		return Integer.toString(verificationCode);
 

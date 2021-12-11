@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.repository.UserRepository;
+
 import com.example.demo.service.twilio.SmsService;
 import com.example.demo.service.twilio.Twilioproperties;
 import com.example.demo.utils.JwtUtil;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.demo.entity.PasswordHistory;
 import com.example.demo.entity.User;
 import com.example.demo.entity.UserPasswordRequest;
+import com.example.demo.exception.UserServiceException;
 import com.example.demo.models.Address;
 import com.example.demo.models.MailRequest;
 import com.example.demo.models.SmsRequest;
@@ -26,7 +28,6 @@ import com.example.demo.models.SmsRequest;
 import java.io.IOException;
 import java.net.SocketException;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
@@ -61,20 +62,21 @@ public class UserService {
 	@Autowired
 	ServletContext context;
 	String randomNamePicture = null;
-	
-	
-	public User addUser(User user, MultipartFile file,String role,String accountStatus,MailRequest mailRequest)  {
+
+	public User addUser(User user, MultipartFile file, String role, String accountStatus, MailRequest mailRequest) {
 		// Password
-		String encodedPassword = this.passwordEncoder.encode(user.getPassword());
-		user.setPassword(encodedPassword);
+		if (user.getPassword() != null) {
+			String encodedPassword = this.passwordEncoder.encode(user.getPassword());
+			user.setPassword(encodedPassword);
+		}
 		// CurrentDate
 		user.setCreatedAt(Utils.getCurrentDate());
-		//Role
+		// Role
 		user.setRole(role);
-		//AccountStatus
+		// AccountStatus
 		user.setAccountStatus(accountStatus);
 		// CurrentAddress
-		String ipAdress="";
+		String ipAdress = "";
 		try {
 			ipAdress = LocationService.MyIpAdress();
 		} catch (SocketException e1) {
@@ -82,40 +84,30 @@ public class UserService {
 		}
 		Address address = LocationService.CurrentLocation(ipAdress);
 		user.setAddress(address.getCity());
-		
+
 		User userEmail;
 		userEmail = this.findUserByEmail(user.getEmail());
 		// userEmail = userRepository.findByEmail(user.getEmail());
 		if (!(userEmail == null))
 			return null;
 		else {
-			// emailService.sendEmail(mailRequest);
-			try {
-			
-				user.setPicture(file.getBytes());
-			} catch (IOException e) {
-				e.printStackTrace();
+			emailService.sendEmail(mailRequest);
+
+			if (file != null) {
+				try {
+
+					user.setPicture(file.getBytes());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
-			
-			
 
 			return user;
 
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
-	public User addUser(User user, MultipartFile file)  {
+	public User addUser(User user, MultipartFile file) {
 		// Password
 		String encodedPassword = this.passwordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
@@ -123,7 +115,7 @@ public class UserService {
 
 		user.setCreatedAt(Utils.getCurrentDate());
 		// CurrentAddress
-		String ipAdress="";
+		String ipAdress = "";
 		try {
 			ipAdress = LocationService.MyIpAdress();
 		} catch (SocketException e1) {
@@ -137,15 +129,15 @@ public class UserService {
 
 		MailRequest mailRequest = new MailRequest(user.getLastName().toUpperCase() + " " + user.getFirstName(),
 				user.getEmail(), "Verification de votre compte", "Veuillez verifier votre compte",
-				"Activer votre compte",
-				"http://localhost:8081/SpringMVC/activateAccount?activationToken=" + activationToken);
-		// emailService.sendEmail(mailRequest);
+				"Activer votre compte", "http://localhost:4200/activateAccount/" + activationToken);
+		 emailService.sendEmail(mailRequest);
 		// Fin
 		User userEmail;
 		userEmail = this.findUserByEmail(user.getEmail());
 		// userEmail = userRepository.findByEmail(user.getEmail());
 		if (!(userEmail == null))
-			return null;
+			throw new UserServiceException("User exist");
+
 		else {
 			try {
 				user.setPicture(file.getBytes());
@@ -154,7 +146,7 @@ public class UserService {
 				e.printStackTrace();
 			}
 			user.setRole("USER");
-			User userSaved = userRepository.save(user);
+			 this.userRepository.save(user);
 			PasswordHistory passwordHistory = new PasswordHistory(user, user.getPassword(), Utils.getCurrentDate());
 			passwordHistoryService.addPasswordHistory(passwordHistory);
 
@@ -190,11 +182,9 @@ public class UserService {
 				user.setActivationToken(newActivationToken);
 				MailRequest mailRequest = new MailRequest(user.getLastName().toUpperCase() + " " + user.getFirstName(),
 						user.getEmail(), "Verification de votre compte", "Veuillez verifier votre compte",
-						"Activer votre compte",
-						"http://localhost:8081/SpringMVC/activateAccount?activationToken=" + newActivationToken);
+						"Activer votre compte", "http://localhost:4200/login/activateAccount/" + newActivationToken);
 				emailService.sendEmail(mailRequest);
 				user.setCreatedAt(Utils.getCurrentDate());
-				
 
 			}
 		}
@@ -204,19 +194,6 @@ public class UserService {
 	public User findUserByEmail(String email) {
 
 		return userRepository.findByEmail(email).orElse(null);
-
-	}
-
-	public void deleteUser(String id) {
-		Optional<User> user;
-		user = userRepository.findById(id);
-		userRepository.delete(user.get());
-
-	}
-
-	public void deleteUser(User user) {
-
-		userRepository.delete(user);
 
 	}
 
@@ -360,6 +337,7 @@ public class UserService {
 
 		SmsRequest smsRequest = new SmsRequest();
 		smsRequest.setNumber(number);
+		System.out.println(verificationCode);
 		smsRequest.setMessage("Voici votre code de verification " + verificationCode);
 
 		String status = this.smsService.sendsms(smsRequest);
@@ -371,7 +349,6 @@ public class UserService {
 
 	public Boolean sendSmsGsm(String number, String verificationCode) {
 		Twilio.init(this.twilioproperties.getAccountSid(), this.twilioproperties.getAuthToken());
-		System.out.println(this.twilioproperties.toString());
 		try {
 			Message.creator(new PhoneNumber(number), new PhoneNumber(this.twilioproperties.getFromNumber()),
 					"Voici votre code de verification " + verificationCode).create();
@@ -380,6 +357,27 @@ public class UserService {
 			return false;
 		}
 
+	}
+
+	public void VerifUserOrNot(User user) {
+		if (user.getAccountStatus().equals("NOT_VERIFIED"))
+			user.setAccountStatus("VERIFIED");
+		else if (user.getAccountStatus().equals("VERIFIED"))
+			user.setAccountStatus("NOT_VERIFIED");
+
+		this.userRepository.save(user);
+	}
+
+	public void deleteUser(User user) {
+		user.setAccountStatus("DELETED");
+
+		this.userRepository.save(user);
+	}
+
+	public Boolean twoFactorAuthenticate(User user) {
+		user.setTwoFactorAuthentication(!user.getTwoFactorAuthentication());
+		 this.userRepository.save(user);
+		 return user.getTwoFactorAuthentication();
 	}
 
 	/*

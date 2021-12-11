@@ -122,13 +122,6 @@ public class UserController {
 	 * }
 	 */
 
-	@PostMapping(value = "/deleteUser")
-	public boolean deleteUser(@RequestParam String id) {
-		userService.deleteUser(id);
-		return true;
-
-	}
-
 	@GetMapping(value = "/getAddress")
 	public String getAddress() {
 
@@ -242,8 +235,8 @@ public class UserController {
 
 		User user = this.userService.getUserByToken(token);
 		if (user != null) {
-			return this.userService.sendSmsTwoFactorAuthentication(user);	
-
+			// return this.userService.sendSmsTwoFactorAuthentication(user);
+			return "3";
 		}
 		return null;
 
@@ -252,7 +245,6 @@ public class UserController {
 	@PostMapping("/sendSms")
 
 	public String sendSms() {
-
 
 		SmsRequest smsRequest = new SmsRequest();
 		smsRequest.setNumber("+21695227678");
@@ -263,6 +255,34 @@ public class UserController {
 			return "true";
 		}
 		return "false";
+
+	}
+
+	@PostMapping("/verifUserOrNot")
+	public void verifUserOrNot(@RequestParam("email") String email) {
+
+		User user = this.userService.findUserByEmail(email);
+		if (user != null)
+			this.userService.VerifUserOrNot(user);
+
+	}
+
+	@PostMapping("/deleteUser")
+	public void deleteUser(@RequestParam("email") String email) {
+
+		User user = this.userService.findUserByEmail(email);
+		if (user != null)
+			this.userService.deleteUser(user);
+
+	}
+
+	@PostMapping("/twoFactorAuthenticate")
+	public Boolean twoFactorAuthenticate(@RequestParam("token") String token) {
+
+		User user = this.userService.getUserByToken(token);
+		if (user != null)
+			return this.userService.twoFactorAuthenticate(user);
+		return null;
 
 	}
 

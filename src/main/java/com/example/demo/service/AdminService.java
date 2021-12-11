@@ -1,9 +1,10 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.entity.Admin;
 import com.example.demo.entity.PasswordHistory;
@@ -28,7 +29,7 @@ public class AdminService {
 	@Autowired
 	PasswordHistoryService passwordHistoryService;
 
-	public Admin addAdmin(Admin admin, MultipartFile file) {
+	public Admin addAdmin(Admin admin) {
 		User user = new Admin();
 		user = (User) admin;
 
@@ -39,7 +40,7 @@ public class AdminService {
 				user.getEmail(), "Vous avez ete ajoute comme Admin avec shopini",
 				"Votre mot de passe est :" + password, "Consulter", "http://localhost:4200/login");
 
-		user = userService.addUser(user, file, "ADMIN", "VERIFIED", mailRequest);
+		user = userService.addUser(user, null, "ADMIN", "VERIFIED", mailRequest);
 
 		if (user != null) {
 			String encodedPassword = this.passwordEncoder.encode(password);
@@ -53,6 +54,12 @@ public class AdminService {
 			return admin;
 		}
 		return null;
+
+	}
+	
+	public List<Admin> getAdmins() {
+
+		return adminRepository.findAll();
 
 	}
 

@@ -45,28 +45,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
    @Override
    protected void configure(HttpSecurity http) throws Exception {
+	   
         http.csrf().disable().authorizeRequests()
-								.antMatchers("/authenticate").permitAll()
-								.antMatchers("/testX").permitAll()
-								.antMatchers("/users").permitAll()
-								.antMatchers("/addUser").permitAll()
-								.antMatchers("/savePicture").permitAll()
-								.antMatchers("/getUserByEmail").permitAll()
-								.antMatchers("/isEmailExist").permitAll()
-								.antMatchers("/getUserByToken").permitAll()
-								.antMatchers("/getPictureByEmail").permitAll()
-								.antMatchers("/updateUser").permitAll()
-								.antMatchers("/updateUserPicture").permitAll()
-								.antMatchers("/changePasswordUser").permitAll()
-								.antMatchers("/forgetPasswordRequest").permitAll()
-								.antMatchers("/getAddress").permitAll()
-								.antMatchers("/checkUserPasswordRequestToken").permitAll()
-								.antMatchers("/addPictureBase64").permitAll()
-								.antMatchers("/addUserX").permitAll()
-								.antMatchers("/sendSmsTwoFactorAuthentication").permitAll()
-								.antMatchers("/sendSms").permitAll()
-								.antMatchers("/client/addClient").permitAll()
-								.antMatchers("/fournisseur/addFournisseur").permitAll()
+								.antMatchers("/**").permitAll()
+								
+
+
+
+
 
 
 

@@ -36,7 +36,7 @@ public class UserServiceTest {
 		System.out.println(userService.getUsers().size());
 		assertEquals(expected + 1, userService.getUsers().size());
 		assertNotNull(user);
-		userService.deleteUser(savedUser.getId());
+		userService.deleteUser(savedUser);
 
 	}
 }

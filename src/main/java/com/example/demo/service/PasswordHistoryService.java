@@ -2,9 +2,10 @@ package com.example.demo.service;
 
 import java.util.List;
 
-import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,9 @@ public class PasswordHistoryService {
 
 	@Autowired
 	PasswordHistoryRepository passwordHistoryRepository;
+	
+	@Autowired
+	Utils utils;
 	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	public Boolean checkPasswordHistory(User user, String password) {
@@ -44,5 +48,29 @@ public class PasswordHistoryService {
 	public void addPasswordHistory(PasswordHistory passwordHistory) {
 		passwordHistoryRepository.save(passwordHistory);
 	}
+	
+	
+	@Scheduled(cron = "0 0 0 * * *")
+	public void deleteOldPasswordHistory(){
+		
+		List<PasswordHistory> passwordHistoryByUserList = passwordHistoryRepository.findAll();
+		
+		for (PasswordHistory passwordHistory : passwordHistoryByUserList) {
+			
+			if(utils.compareDateByMonths(passwordHistory.getCreatedAt(), 2)){
+				this.passwordHistoryRepository.delete(passwordHistory);
+			}
+		}
+
+
+		
+		
+		
+		
+	}
+	
+	
+	
+	
 
 }

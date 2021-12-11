@@ -8,6 +8,7 @@ import com.example.demo.models.MailRequest;
 import com.example.demo.repository.ClientRepository;
 import com.example.demo.utils.Utils;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class ClientService {
 			MailRequest mailRequest = new MailRequest(user.getLastName().toUpperCase() + " " + user.getFirstName(),
 					user.getEmail(), "Verification de votre compte", "Veuillez verifier votre compte",
 					"Activer votre compte",
-					"http://localhost:8081/SpringMVC/activateAccount?activationToken=" + activationToken);
+					"http://localhost:4200/login/activateAccount/" + activationToken);
 		
 			
 			user = userService.addUser(user, file, "CLIENT","NOT_VERIFIED",mailRequest);
@@ -59,6 +60,12 @@ public class ClientService {
 			return client;
 		}
 		return null;
+
+	}
+	
+	public List<Client> getClients() {
+
+		return clientRepository.findAll();
 
 	}
 

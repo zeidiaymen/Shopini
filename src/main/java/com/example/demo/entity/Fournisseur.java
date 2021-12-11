@@ -12,5 +12,5 @@ public class Fournisseur extends User {
 	}
 
 
-
+	
 }
