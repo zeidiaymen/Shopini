@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.entity.user.Livreur;
+import com.example.demo.entity.Livreur;
 
 @Repository
 public interface LivreurRepository extends JpaRepository<Livreur, String> {
@@ -17,5 +17,7 @@ public interface LivreurRepository extends JpaRepository<Livreur, String> {
 	@Query(value = "SELECT COUNT(*) FROM USER u where u.role='LIVREUR'",
 			  nativeQuery = true)
 			int sizeLivreur();
+	@Query("SELECT c From Livreur c where c.id = ?1")
+	public Livreur findByIds(String id);
 
 }

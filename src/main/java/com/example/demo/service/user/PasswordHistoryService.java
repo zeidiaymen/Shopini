@@ -9,8 +9,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.user.PasswordHistory;
-import com.example.demo.entity.user.User;
+import com.example.demo.entity.PasswordHistory;
+import com.example.demo.entity.User;
 import com.example.demo.repository.user.PasswordHistoryRepository;
 import com.example.demo.utils.user.Utils;
 

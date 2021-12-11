@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.demo.entity.user.User;
-import com.example.demo.entity.user.UserPasswordRequest;
+import com.example.demo.entity.User;
+import com.example.demo.entity.UserPasswordRequest;
 
 
 public interface UserPasswordRequestRepository  extends JpaRepository <UserPasswordRequest,Integer>{

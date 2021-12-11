@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.user.Admin;
-import com.example.demo.entity.user.PasswordHistory;
-import com.example.demo.entity.user.User;
+import com.example.demo.entity.Admin;
+import com.example.demo.entity.PasswordHistory;
+import com.example.demo.entity.User;
 import com.example.demo.models.user.MailRequest;
 import com.example.demo.repository.user.AdminRepository;
 import com.example.demo.utils.user.Utils;

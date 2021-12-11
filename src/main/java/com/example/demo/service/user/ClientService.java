@@ -1,9 +1,9 @@
 package com.example.demo.service.user;
 
-import com.example.demo.entity.user.Client;
-import com.example.demo.entity.user.PasswordHistory;
-import com.example.demo.entity.user.Profession;
-import com.example.demo.entity.user.User;
+import com.example.demo.entity.Client;
+import com.example.demo.entity.PasswordHistory;
+import com.example.demo.entity.Profession;
+import com.example.demo.entity.User;
 import com.example.demo.models.user.MailRequest;
 import com.example.demo.repository.user.ClientRepository;
 import com.example.demo.utils.user.Utils;
@@ -67,6 +67,11 @@ public class ClientService {
 
 		return clientRepository.findAll();
 
+	}
+
+	public Client getClient(String i) {
+		// TODO Auto-generated method stub
+		return clientRepository.findByIds(i);
 	}
 	
 	public int sizeClients(){

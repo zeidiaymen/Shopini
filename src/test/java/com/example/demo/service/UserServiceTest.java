@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.entity.user.User;
+import com.example.demo.entity.User;
 import com.example.demo.service.user.UserService;
 
 @RunWith(SpringRunner.class)

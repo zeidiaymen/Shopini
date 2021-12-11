@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.user.User;
-import com.example.demo.entity.user.UserPasswordRequest;
+import com.example.demo.entity.User;
+import com.example.demo.entity.UserPasswordRequest;
 import com.example.demo.repository.user.UserPasswordRequestRepository;
 import com.example.demo.utils.user.JwtUtil;
 import com.example.demo.utils.user.Utils;

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.entity.user.User;
+import com.example.demo.entity.User;
 import com.example.demo.models.user.Address;
 import com.example.demo.models.user.AuthRequest;
 import com.example.demo.models.user.SmsRequest;

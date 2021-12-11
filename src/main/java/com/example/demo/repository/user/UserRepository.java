@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.entity.user.User;
+import com.example.demo.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository <User,String> {	
 	public Optional<User> findByActivationToken(String activationToken);

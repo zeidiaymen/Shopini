@@ -11,9 +11,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.entity.user.PasswordHistory;
-import com.example.demo.entity.user.User;
-import com.example.demo.entity.user.UserPasswordRequest;
+import com.example.demo.entity.PasswordHistory;
+import com.example.demo.entity.User;
+import com.example.demo.entity.UserPasswordRequest;
 import com.example.demo.exception.user.UserServiceException;
 import com.example.demo.models.user.Address;
 import com.example.demo.models.user.MailRequest;
