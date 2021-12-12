@@ -16,10 +16,21 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+<<<<<<< HEAD
+=======
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.experimental.FieldDefaults;
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+>>>>>>> 37037f1230dc29126282fa3406a9087c60f38c84
 @Entity
 public class ProductInOrder  implements Serializable{
 	@Id
 	@GeneratedValue (strategy =GenerationType.IDENTITY)
+<<<<<<< HEAD
 	private int id ;
 	private String productName ;
 	private int qte ;
@@ -88,12 +99,27 @@ public class ProductInOrder  implements Serializable{
 	}
 	private float price ;
 	private float discount ;
+=======
+	 int id ;
+	 String productName ;
+	 int qte ;
+	 float price ;
+	 float discount ;
+>>>>>>> 37037f1230dc29126282fa3406a9087c60f38c84
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreationTimestamp
 	Date creationDate ;
 	@OneToOne(mappedBy="prod")
+<<<<<<< HEAD
 	private Produit produit ;
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="fk_detail")
 	private DetailProduit detail;
+=======
+	 Produit produit ;
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JsonIgnore
+	@JoinColumn(name="fk_detail")
+	 detailFacture detail ;
+>>>>>>> 37037f1230dc29126282fa3406a9087c60f38c84
 }

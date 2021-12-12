@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.entity.User;
+import com.example.demo.service.user.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -30,13 +31,13 @@ public class UserServiceTest {
 		System.out.println(expected);
 		User user=new User();
 		user = new User("Seifeddine", "BENSALAH", "seifeddine.@gmail.Xfxr", "12345678", "MASCULIN",
-				"12345678", "picture");
+				"12345678");
 		MultipartFile file=null;
 		User savedUser = userService.addUser(user,file);
 		System.out.println(userService.getUsers().size());
 		assertEquals(expected + 1, userService.getUsers().size());
 		assertNotNull(user);
-		userService.deleteUser(savedUser.getId());
+		userService.deleteUser(savedUser);
 
 	}
 }

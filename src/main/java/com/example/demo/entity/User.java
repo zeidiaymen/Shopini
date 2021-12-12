@@ -1,8 +1,11 @@
 package com.example.demo.entity;
 
 import java.io.Serializable;
+
+
 import javax.persistence.*;
 import org.hibernate.annotations.Parameter;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -48,9 +51,9 @@ public class User implements Serializable {
 	@NonNull
 	@Column(columnDefinition = " varchar(8) ",nullable=false)
 	 String tel;
-	@NonNull
-	@Column(columnDefinition = " varchar(255) ",nullable=false)
-	 String picture;
+
+	@Lob()
+	byte[] picture;
 	@Column(columnDefinition="varchar(16)")
 	 String createdAt;
 	@Column(columnDefinition = " varchar(20) ",nullable=false)
@@ -67,7 +70,8 @@ public class User implements Serializable {
 	String confirmPassword;
 	@Transient
 	String reCaptcha;
-
+	
+	
 	
 
 	
