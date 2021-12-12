@@ -2,6 +2,8 @@ package com.example.demo.controller.facture;
 
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,11 +50,11 @@ public class ContProductInOrder {
 		return prod.retreiveAllProdByidClient(id);
 	}
 	
-	@PostMapping(value="/postProdInOrder/{id}")
+	@PostMapping(value="/postProdInOrder/{id}/{idp}")
 	@ResponseBody
-	public ProductInOrder postProd(@PathVariable("id")int id ,@RequestBody ProductInOrder p )
+	public ProductInOrder postProd(@PathVariable("id")int id ,@RequestBody ProductInOrder p,@PathVariable("idp") Long idp )
 	{
-		return prod.addProd(p,id);
+		return prod.addProd(p,id,idp);
 	}
 	
 	@DeleteMapping(value ="/deleteProdInOrder/{id}")

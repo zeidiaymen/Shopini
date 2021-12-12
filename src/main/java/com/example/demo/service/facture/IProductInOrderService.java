@@ -8,7 +8,7 @@ import com.example.demo.entity.detailFacture;
 public interface IProductInOrderService {
 	
 	
-	public ProductInOrder addProd(ProductInOrder p,int idD);
+	public ProductInOrder addProd(ProductInOrder p,int idD,Long idproduit);
 	public void deleteProductInOrder(int id );
 	public List<ProductInOrder>retreiveAllProductsInOrder();
 	public void deleteAll(int id) ;

@@ -8,8 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.entity.Facture;
 import com.example.demo.entity.ProductInOrder;
+import com.example.demo.entity.Produit;
 import com.example.demo.entity.detailFacture;
 import com.example.demo.repository.facture.*;
+import com.example.demo.repository.produit.IProduitRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,10 +27,14 @@ public class ProductInOrderServiceIMPL implements IProductInOrderService {
 	RepDetailFacutre fact;
 	@Autowired
 	RepFacture fp;
+	@Autowired
+	IProduitRepository ps;
 
 	@Transactional
-	public ProductInOrder addProd(ProductInOrder p, int idFact) {
-
+	public ProductInOrder addProd(ProductInOrder p, int idFact,Long idproduit) {
+		Produit produit = ps.findById(idproduit).orElse(null);
+		produit.setProd(p);
+		ps.save(produit);
 		detailFacture f = new detailFacture();
 		f.setMontanRemise(p.getDiscount());
 		f.setPrixTotal(p.getPrice() * p.getQte() - p.getDiscount() * p.getPrice() * p.getQte());
