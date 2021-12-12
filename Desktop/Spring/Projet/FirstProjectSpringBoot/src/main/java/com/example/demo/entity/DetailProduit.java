@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table( name = "DetailProduit")
@@ -34,9 +36,12 @@ public class DetailProduit implements Serializable {
 	private CategorieProduit categorieProduit;
 	private int quantite;
 	
+	@JsonIgnore
 	@OneToOne(mappedBy="detailProduit")
 	private Produit produit;
-	
+	public DetailProduit(){
+		super();
+	}
 	public DetailProduit(Long idDetailProduit, Date dateCreation, Date dateDerniereModification,
 			CategorieProduit categorieProduit) {
 		super();
@@ -44,6 +49,28 @@ public class DetailProduit implements Serializable {
 		this.dateCreation = dateCreation;
 		this.dateDerniereModification = dateDerniereModification;
 		this.categorieProduit = categorieProduit;
+	}
+
+	public DetailProduit(Long idDetailProduit, Date dateCreation, Date dateLimiteConsommation,
+			Date dateDerniereModification, CategorieProduit categorieProduit, int quantite, Produit produit) {
+		super();
+		this.idDetailProduit = idDetailProduit;
+		this.dateCreation = dateCreation;
+		this.dateLimiteConsommation = dateLimiteConsommation;
+		this.dateDerniereModification = dateDerniereModification;
+		this.categorieProduit = categorieProduit;
+		this.quantite = quantite;
+		this.produit = produit;
+	}
+	public DetailProduit( Date dateCreation, Date dateLimiteConsommation,
+			Date dateDerniereModification, CategorieProduit categorieProduit, int quantite, Produit produit) {
+		super();
+		this.dateCreation = dateCreation;
+		this.dateLimiteConsommation = dateLimiteConsommation;
+		this.dateDerniereModification = dateDerniereModification;
+		this.categorieProduit = categorieProduit;
+		this.quantite = quantite;
+		this.produit = produit;
 	}
 
 	@Override
