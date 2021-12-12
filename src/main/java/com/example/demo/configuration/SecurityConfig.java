@@ -54,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 								.antMatchers("/savePicture").permitAll()
 								.antMatchers("/getUserByEmail").permitAll()
 								.antMatchers("/isEmailExist").permitAll()
+								.antMatchers("/add-Reclamation").permitAll()
 
                 .anyRequest().authenticated()
                 .and().exceptionHandling().and().sessionManagement()
