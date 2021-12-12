@@ -1,4 +1,4 @@
-package com.example.demo.servicesImpl;
+package com.example.demo.servicesImpl.produit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,12 +20,12 @@ import com.example.demo.entity.Fournisseur;
 import com.example.demo.entity.ImagesProduit;
 import com.example.demo.entity.MapLocalisationProduitFournisseur;
 import com.example.demo.entity.Produit;
-import com.example.demo.repositories.IDetailProduitRepository;
-import com.example.demo.repositories.IFournisseurRepository;
-import com.example.demo.repositories.IImagesProduitRepository;
-import com.example.demo.repositories.IMapLocalisationProduitFournisseurRepository;
-import com.example.demo.repositories.IProduitRepository;
-import com.example.demo.services.IProduitService;
+import com.example.demo.repository.produit.IDetailProduitRepository;
+import com.example.demo.repository.produit.IFournisseurRepository;
+import com.example.demo.repository.produit.IImagesProduitRepository;
+import com.example.demo.repository.produit.IMapLocalisationProduitFournisseurRepository;
+import com.example.demo.repository.produit.IProduitRepository;
+import com.example.demo.services.produit.IProduitService;
 
 import lombok.extern.slf4j.Slf4j;
 import java.io.ByteArrayInputStream;

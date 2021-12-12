@@ -1,4 +1,4 @@
-package com.example.demo.servicesImpl;
+package com.example.demo.servicesImpl.produit;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.DetailProduit;
-import com.example.demo.repositories.IDetailProduitRepository;
-import com.example.demo.services.IDetailProduitService;
+import com.example.demo.repository.produit.IDetailProduitRepository;
+import com.example.demo.services.produit.IDetailProduitService;
 
 import lombok.extern.slf4j.Slf4j;
 

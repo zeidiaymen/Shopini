@@ -18,7 +18,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.demo.services.IImagesProduitService;
+import com.example.demo.services.produit.IImagesProduitService;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 

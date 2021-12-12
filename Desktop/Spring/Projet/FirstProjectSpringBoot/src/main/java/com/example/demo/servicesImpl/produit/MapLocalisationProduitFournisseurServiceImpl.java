@@ -1,4 +1,4 @@
-package com.example.demo.servicesImpl;
+package com.example.demo.servicesImpl.produit;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.MapLocalisationProduitFournisseur;
-import com.example.demo.repositories.IMapLocalisationProduitFournisseurRepository;
-import com.example.demo.services.IMapLocalisationProduitFournisseurService;
+import com.example.demo.repository.produit.IMapLocalisationProduitFournisseurRepository;
+import com.example.demo.services.produit.IMapLocalisationProduitFournisseurService;
 
 @Service
 public class MapLocalisationProduitFournisseurServiceImpl implements 

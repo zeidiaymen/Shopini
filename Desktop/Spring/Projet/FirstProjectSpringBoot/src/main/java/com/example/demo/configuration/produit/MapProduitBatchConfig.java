@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.example.demo.configuration.produit;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.context.annotation.Configuration;
 

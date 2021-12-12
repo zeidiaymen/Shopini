@@ -1,4 +1,4 @@
-package com.example.demo.controllers;
+package com.example.demo.controller.produit;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,8 +38,8 @@ import com.example.demo.ProductUtils.ProductResponseMessage;
 import com.example.demo.entity.ImagesProduit;
 import com.example.demo.entity.MapLocalisationProduitFournisseur;
 import com.example.demo.entity.Produit;
-import com.example.demo.services.IImagesProduitService;
-import com.example.demo.services.IProduitService;
+import com.example.demo.services.produit.IImagesProduitService;
+import com.example.demo.services.produit.IProduitService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

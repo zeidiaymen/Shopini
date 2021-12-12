@@ -1,4 +1,4 @@
-package com.example.demo.services;
+package com.example.demo.services.produit;
 
 import java.util.ArrayList;
 import java.util.HashMap;

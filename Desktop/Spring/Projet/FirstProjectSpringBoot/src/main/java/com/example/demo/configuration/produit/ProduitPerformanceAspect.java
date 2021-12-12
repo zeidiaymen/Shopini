@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.example.demo.configuration.produit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

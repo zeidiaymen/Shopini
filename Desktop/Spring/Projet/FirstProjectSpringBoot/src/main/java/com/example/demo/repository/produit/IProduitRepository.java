@@ -1,4 +1,4 @@
-package com.example.demo.repositories;
+package com.example.demo.repository.produit;
 
 import java.util.ArrayList;
 import java.util.Date;

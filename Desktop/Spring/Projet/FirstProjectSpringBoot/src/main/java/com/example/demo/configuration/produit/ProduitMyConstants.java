@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.example.demo.configuration.produit;
 
 public class ProduitMyConstants {
 

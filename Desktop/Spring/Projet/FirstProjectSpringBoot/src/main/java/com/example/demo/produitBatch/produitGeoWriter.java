@@ -6,7 +6,7 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.entity.MapLocalisationProduitFournisseur;
-import com.example.demo.services.IMapLocalisationProduitFournisseurService;
+import com.example.demo.services.produit.IMapLocalisationProduitFournisseurService;
 
 
 

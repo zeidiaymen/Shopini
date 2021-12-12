@@ -1,12 +1,13 @@
-package com.example.demo.servicesImpl;
+package com.example.demo.servicesImpl.produit;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.repositories.IImagesProduitRepository;
-import com.example.demo.services.IImagesProduitService;
+import com.example.demo.repository.produit.IImagesProduitRepository;
+import com.example.demo.services.produit.IImagesProduitService;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
