@@ -15,11 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-<<<<<<< HEAD
-=======
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
->>>>>>> 37037f1230dc29126282fa3406a9087c60f38c84
 
 @Entity
 @Table( name = "DetailProduit")
@@ -39,18 +36,12 @@ public class DetailProduit implements Serializable {
 	private CategorieProduit categorieProduit;
 	private int quantite;
 	
-<<<<<<< HEAD
-	@OneToOne(mappedBy="detailProduit")
-	private Produit produit;
-	
-=======
 	@JsonIgnore
 	@OneToOne(mappedBy="detailProduit")
 	private Produit produit;
 	public DetailProduit(){
 		super();
 	}
->>>>>>> 37037f1230dc29126282fa3406a9087c60f38c84
 	public DetailProduit(Long idDetailProduit, Date dateCreation, Date dateDerniereModification,
 			CategorieProduit categorieProduit) {
 		super();
@@ -60,8 +51,6 @@ public class DetailProduit implements Serializable {
 		this.categorieProduit = categorieProduit;
 	}
 
-<<<<<<< HEAD
-=======
 	public DetailProduit(Long idDetailProduit, Date dateCreation, Date dateLimiteConsommation,
 			Date dateDerniereModification, CategorieProduit categorieProduit, int quantite, Produit produit) {
 		super();
@@ -84,7 +73,6 @@ public class DetailProduit implements Serializable {
 		this.produit = produit;
 	}
 
->>>>>>> 37037f1230dc29126282fa3406a9087c60f38c84
 	@Override
 	public String toString() {
 		return "DetailProduit [idDetailProduit=" + idDetailProduit + ", dateCreation=" + dateCreation
@@ -92,13 +80,6 @@ public class DetailProduit implements Serializable {
 				+ dateDerniereModification + ", categorieProduit=" + categorieProduit + ", quantite=" + quantite
 				+ ", produit=" + produit + "]";
 	}
-<<<<<<< HEAD
-	public DetailProduit(){
-		
-		
-	}
-=======
->>>>>>> 37037f1230dc29126282fa3406a9087c60f38c84
 
 	public Long getIdDetailProduit() {
 		return idDetailProduit;
@@ -158,8 +139,4 @@ public class DetailProduit implements Serializable {
 	
 	
 	
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 37037f1230dc29126282fa3406a9087c60f38c84

@@ -1,5 +1,4 @@
 package com.example.demo.entity;
-
 import java.io.Serializable;
 
 import javax.persistence.*;
@@ -16,7 +15,6 @@ import lombok.experimental.FieldDefaults;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-
 public class Reclamation implements Serializable {
 
 	@Id
@@ -37,7 +35,7 @@ public class Reclamation implements Serializable {
 	String status;
 	@NonNull
 	//@Column(columnDefinition = " varchar(255) ", nullable = false)
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	//@JoinColumn(name="produit")
 	@JsonIgnore
 	Produit produit;

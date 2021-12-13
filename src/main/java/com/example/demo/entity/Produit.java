@@ -1,10 +1,6 @@
 package com.example.demo.entity;
 
 import java.io.Serializable;
-<<<<<<< HEAD
-
-import javax.persistence.*;
-=======
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -18,41 +14,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
->>>>>>> 37037f1230dc29126282fa3406a9087c60f38c84
 
 @Entity
 @Table( name = "Produit")
 public class Produit implements Serializable {
 
-<<<<<<< HEAD
-	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	@Column(name="idProduit")
-	private Long idProduit; 
-	private String code;
-	private String libelle;
-	private String picture;
-	private float prixUnitaire;
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="prod")
-	private ProductInOrder prod ;
-	public ProductInOrder getProd() {
-		return prod;
-	}
-
-	public void setProd(ProductInOrder prod) {
-		this.prod = prod;
-	}
-
-	@OneToOne
-	@JoinColumn(name="FK_DetailProduit")
-	private DetailProduit detailProduit;
-	
-	
-	
-
-	public Produit(Long idProduit, String code, String libelle, String picture, float prixUnitaire, ProductInOrder prod,
-=======
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -85,26 +51,15 @@ public class Produit implements Serializable {
 	}
 	
 	public Produit(Long idProduit, String code, String libelle, float prixUnitaire, ProductInOrder prod,
->>>>>>> 37037f1230dc29126282fa3406a9087c60f38c84
 			DetailProduit detailProduit) {
 		super();
 		this.idProduit = idProduit;
 		this.code = code;
 		this.libelle = libelle;
-<<<<<<< HEAD
-		this.picture = picture;
-=======
->>>>>>> 37037f1230dc29126282fa3406a9087c60f38c84
 		this.prixUnitaire = prixUnitaire;
 		this.prod = prod;
 		this.detailProduit = detailProduit;
 	}
-<<<<<<< HEAD
-	
-	public Produit() {
-	}
-
-=======
 
 	public Produit(Long idProduit, String code, String libelle, float prixUnitaire,
 			DetailProduit detailProduit, Fournisseur fournisseur, ProductInOrder prod) {
@@ -150,7 +105,6 @@ public class Produit implements Serializable {
 		this.mapLocalisation = mapLocalisation;
 		this.fournisseur = fournisseur;
 	}
->>>>>>> 37037f1230dc29126282fa3406a9087c60f38c84
 	public Long getIdProduit() {
 		return idProduit;
 	}
@@ -182,21 +136,8 @@ public class Produit implements Serializable {
 	public void setPrixUnitaire(float prixUnitaire) {
 		this.prixUnitaire = prixUnitaire;
 	}
-<<<<<<< HEAD
-	
-	
-
-	public String getPicture() {
-		return picture;
-	}
-
-	public void setPicture(String picture) {
-		this.picture = picture;
-	}
-=======
 
 	
->>>>>>> 37037f1230dc29126282fa3406a9087c60f38c84
 
 	public DetailProduit getDetailProduit() {
 		return detailProduit;
@@ -206,16 +147,6 @@ public class Produit implements Serializable {
 		this.detailProduit = detailProduit;
 	}
 
-<<<<<<< HEAD
-	@Override
-	public String toString() {
-		return "Produit [idProduit=" + idProduit + ", code=" + code + ", libelle=" + libelle + ", prixUnitaire="
-				+ prixUnitaire + "]";
-	}
-	
-	
-	
-=======
 	public ProductInOrder getProd() {
 		return prod;
 	}
@@ -252,5 +183,4 @@ public class Produit implements Serializable {
 	}
 	
 	
->>>>>>> 37037f1230dc29126282fa3406a9087c60f38c84
 }
