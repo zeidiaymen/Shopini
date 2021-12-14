@@ -161,7 +161,15 @@ public class UserService {
 
 	public Boolean updatePasswordUser(User user, String password) {
 
-		return passwordHistoryService.checkPasswordHistory(user, password);
+		if (passwordHistoryService.checkPasswordHistory(user, password)){
+			String encodedPassword = this.passwordEncoder.encode(password);
+			user.setPassword(encodedPassword);
+			this.userRepository.save(user);
+			return true;
+		}
+		return false;
+			
+		
 
 	}
 

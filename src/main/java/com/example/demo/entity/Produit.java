@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table( name = "Produit")
 public class Produit implements Serializable {
@@ -42,7 +44,7 @@ public class Produit implements Serializable {
 	@ManyToOne
 	private Fournisseur fournisseur;
 
-
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "prod")
 	private ProductInOrder prod;

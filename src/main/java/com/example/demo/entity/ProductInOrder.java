@@ -32,6 +32,9 @@ public class ProductInOrder  implements Serializable{
 	 int qte ;
 	 float price ;
 	 float discount ;
+	 String img;
+	 
+	 
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreationTimestamp
 	Date creationDate ;
