@@ -1,15 +1,18 @@
 package com.example.demo.entity.user;
 
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @SuppressWarnings("serial")
 @DiscriminatorValue("LIVREUR")
 @Entity
+
 public class Livreur extends User  {
 	
 	private int solde;
+	@Column(nullable=true)
 	private int pourcentage;
 
 	

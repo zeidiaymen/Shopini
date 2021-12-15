@@ -13,14 +13,15 @@ import org.hibernate.annotations.GenericGenerator;
 
 @SuppressWarnings("serial")
 @Data
+@RequiredArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level=AccessLevel.PRIVATE)
 @Entity
 @Table(name = "user")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "role")
 @DiscriminatorValue("USER")
-@RequiredArgsConstructor
-@NoArgsConstructor
-@FieldDefaults(level=AccessLevel.PRIVATE)
+
 
 
 

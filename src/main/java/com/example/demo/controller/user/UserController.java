@@ -163,9 +163,13 @@ public class UserController {
 
 	@PostMapping("/updateUser")
 
-	public User updateUser(@RequestBody User user) throws JsonMappingException, JsonProcessingException {
+	public User updateUser(@RequestParam("token")String token ,@RequestParam("firstName")String firstName ,@RequestParam("lastName")String lastName) throws JsonMappingException, JsonProcessingException {
 
-		return this.userService.updateUser(user);
+		User user = this.userService.getUserByToken(token);
+		if (user != null)
+			return this.userService.updateUser(user,firstName,lastName);
+
+		return null;
 	}
 
 	@PostMapping("/updateUserPicture")
